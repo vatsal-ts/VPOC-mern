@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-require('mongoose-type-email');
 
 const userSchema = new Schema({
     username: {
@@ -26,7 +25,6 @@ const userSchema = new Schema({
     password: {
         type : String,
         required : true,
-        minlength : 4
     },
     phone: {
         type: String,
