@@ -8,11 +8,18 @@ router.route('/category/:category').get((req, res) => {
         .catch(err => res.status(400).json('Error: ' + err));
 })
 
-router.route('/user/:userid').get((req, res) => { 
-    userid = req.params.userid;
-    Product.find({"userid":userid})
+router.route('/seller/:sellerid').get((req, res) => { 
+    sellerid = req.params.sellerid;
+    Product.find({"sellerid":sellerid})
         .then(product => res.json(product))
         .catch(err => res.status(400).json('Error: ' + err));
+})
+
+router.route('/buyer/:buyerid').get((req, res) => { 
+  buyerid = req.params.buyerid;
+  Product.find({"buyerid":buyerid})
+      .then(product => res.json(product))
+      .catch(err => res.status(400).json('Error: ' + err));
 })
 
 router.route('/add').post((req, res) => {

@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { loginUser } from "../../actions/authActions";
 import classnames from "classnames";
+import { browserHistory } from 'react-router';
 
 class Login extends Component {
   constructor() {
@@ -15,9 +16,18 @@ class Login extends Component {
     };
   }
 
+  componentDidMount() {
+    // If logged in and user navigates to Login page, should redirect them to dashboard
+    if (this.props.auth.isAuthenticated) {
+      // this.props.history.push("/dashboard");
+      window.location.href = "./dashboard";
+    }
+  }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.auth.isAuthenticated) {
-      this.props.history.push("/dashboard"); // push user to dashboard when they login
+      // this.props.history.push("/dashboard");
+      window.location.href = "./dashboard"; // push user to dashboard when they login
     }
     if (nextProps.errors) {
           this.setState({
@@ -36,8 +46,8 @@ class Login extends Component {
       password: this.state.password,
     };
 
-    // this.props.loginUser(userData);
-    console.log(userData);
+    this.props.loginUser(userData);
+    // console.log(userData);
   };
   render() {
     const { errors } = this.state;
@@ -163,9 +173,9 @@ const mapStateToProps = state => ({
   errors: state.errors
 });
 
-// export default connect(
-//   mapStateToProps,
-//   { loginUser }
-// )(Login);
+export default connect(
+  mapStateToProps,
+  { loginUser }
+)(Login);
 
-export default Login;
+// export default Login;
