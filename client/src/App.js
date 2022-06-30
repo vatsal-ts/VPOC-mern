@@ -51,8 +51,8 @@ function App() {
         <Routes>
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
-          {/* <Route path="/dashboard" element={<Dashboard />} /> */}
-          {/* <PrivateRoute exact path="/dashboard"  element={<Dashboard/>} /> */}
+          <Route path="/dashboard" element={<Dashboard />} />
+          {/* <switch><PrivateRoute exact path="/dashboard"  element={<Dashboard/>} /></switch> */}
           <Route path="/products/category/:category" element={<CardGrid/>} />
           <Route path="/products/product/:id" element={<SingleProduct />} />
         </Routes>

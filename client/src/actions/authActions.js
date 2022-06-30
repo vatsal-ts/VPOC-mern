@@ -12,7 +12,7 @@ import {
 export const registerUser = (userData, history) => dispatch => {
   axios
     .post("/register", userData)
-    .then(res => history.push("/login")) // re-direct to login on successful register
+    .then(res => window.location.href = "./login") // re-direct to login on successful register
     .catch(err =>
       dispatch({
         type: GET_ERRORS,
@@ -68,4 +68,5 @@ export const logoutUser = () => dispatch => {
   setAuthToken(false);
   // Set current user to empty object {} which will set isAuthenticated to false
   dispatch(setCurrentUser({}));
+  window.location.href = "./login";
 };
