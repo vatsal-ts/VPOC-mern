@@ -2,33 +2,61 @@ import React, { Component } from "react";
 import { Link,useParams } from "react-router-dom";
 import AdditionalInfo from "./AdditionalInfo";
 import axios from "axios";
+import CardComponent from "../components/Cards/CardGrid.component";
 
 class SingleProduct extends Component {
   constructor(props) {
     super(props);
     console.dir(props);
 
-    this.state = { product: {}};
+    this.state = { product: {},seller : {},similarProducts : []};
   }
 
-  componentDidMount() {
-    axios
-      .get("/products/" + this.props.params.id)
-      .then((response) => {
-        this.setState({ product: response.data });
+  async componentDidMount () {
+    const product = await axios.get("/products/" + this.props.params.id)
+      // .then((response) => {
+      //   this.setState({ product: response.data });
+      // })
+      // .catch((error) => {
+      //   console.log(error);
+      // });
+
+    const seller  = await axios.get("/user/" + product.data.sellerid)
+      // .then((response2) => {
+      //   this.setState({ seller: response2.data });
+      // })
+      // .catch((error2) => {
+      //   console.log(error2);
+      // });
+
+    const similarProducts = await axios.get("/products/category/" + product.data.category)
+      // .then((response2) => {
+      //   this.setState({ similarProducts : response2.data });
+      // })
+      // .catch((error2) => {
+      //   console.log(error2);
+      // });
+      console.log(seller.data)
+      console.log(similarProducts.data)
+      this.setState({
+        product : product.data,
+        seller : seller.data,
+        similarProducts : similarProducts.data
       })
-      .catch((error) => {
-        console.log(error);
-      });
+    
+  }
+
+  productList(productlist) {
+    return productlist.map((currentProduct) => {
+      return <CardComponent product={currentProduct} />;
+    });
   }
   
   render() {
     return (
 <main className="mt-5 pt-4">
       <div className="container dark-grey-text mt-5">
-        {/*Grid row*/}
         <div className="row wow fadeIn">
-          {/*Grid column*/}
           <div className="col-md-6 mb-4">
             <img
               src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/14.jpg"
@@ -36,10 +64,7 @@ class SingleProduct extends Component {
               alt=""
             />
           </div>
-          {/*Grid column*/}
-          {/*Grid column*/}
           <div className="col-md-6 mb-4">
-            {/*Content*/}
             <div className="p-4">
               <div className="mb-3">
                 <a href>
@@ -72,17 +97,27 @@ class SingleProduct extends Component {
                   Buy Now
                   <i className="fas fa-shopping-cart ml-1" />
                 </button>
+                <button className="btn btn-primary btn-md my-0 p" type="submit">
+                  Add To Cart
+                  <i className="fas fa-shopping-cart ml-1" />
+                </button>
               </form>
             </div>
-            {/*Content*/}
+            <div>Seller info {this.state.seller.username} {this.state.seller.email}</div>
           </div>
-          {/*Grid column*/}
+
         </div>
-        {/*Grid row*/}
+
         <hr />
-        {/*Grid row*/}
-        <AdditionalInfo/>
-        {/*Grid row*/}
+        <div
+        className="row row-cols-1 row-cols-md-5 g-4"
+        style={{ padding: "30px" }}
+      >
+        {this.productList(this.state.similarProducts)}
+      </div>
+        
+        {/* <AdditionalInfo/> */}
+
       </div>
     </main>
     );

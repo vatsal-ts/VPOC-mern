@@ -88,7 +88,7 @@ router.route("/login").post((req, res) => {
   });
 });
 
-router.route("/profile/:id").get((req, res) => {
+router.route("/user/:id").get((req, res) => {
   id = req.params.id;
   User.findById(id)
     .then((user) => res.json(user))

@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import CardComponent from "../components/Cards/CardGrid.component";
-
+import Banner from "../components/Banner/banner";
+import "../components/extrastyling/headerhover.css"
 class CardGrid extends Component {
   constructor(props) {
     super(props);
@@ -20,24 +21,27 @@ class CardGrid extends Component {
         console.log(error);
       });
   }
+  
 
   productList() {
     return this.state.products.map((currentProduct) => {
-      return (
-        <CardComponent
-            product = {currentProduct}
-        />
-      );
+      return <CardComponent product={currentProduct} />;
     });
   }
 
   render() {
     return (
-      <div
-        className="row row-cols-1 row-cols-md-5 g-4"
-        style={{ padding: "30px" }}
-      >
-        {this.productList()}
+      <div>
+        
+        <Banner />
+        
+        <div className="" style={{textAlign: "center"}}><h1 class="mb-1 hover-underline-animation" style={{marginTop:"2.5rem" }}>{this.props.params.category}</h1></div>
+        <div
+          className="row row-cols-1 row-cols-md-4 g-4"
+          style={{ paddingLeft: "130px",paddingRight: "100px" ,paddingTop: "40px",paddingBottom: "40px"}}
+        >
+          {this.productList()}
+        </div>
       </div>
     );
   }

@@ -27,8 +27,7 @@ router.route('/add').post((req, res) => {
     const description = req.body.description;
     const price = req.body.price;
     const category = req.body.category;
-    const sellerid = "62bb10b1cdf7aa4ebba2b076";
-    //to Update seller!!
+    const sellerid = req.body.sellerid;
     
     const newProduct = new Product({
       title,

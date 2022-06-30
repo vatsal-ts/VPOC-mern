@@ -2,81 +2,32 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <footer className="bg-light text-center text-white">
+    <section className>
+    {/* Footer */}
+    <footer className="text-center text-white" style={{backgroundColor: '#0a4275'}}>
       {/* Grid container */}
       <div className="container p-4 pb-0">
-        {/* Section: Social media */}
-        <section className="mb-4">
-          {/* Facebook */}
-          <a
-            className="btn btn-primary btn-floating m-1"
-            style={{ backgroundColor: "#3b5998" ,borderRadius:"2rem"}}
-            href="#!"
-            role="button"
-          >
-            <i className="fab fa-facebook-f" />
-          </a>
-          {/* Twitter */}
-          <a
-            className="btn btn-primary btn-floating m-1"
-            style={{ backgroundColor: "#55acee" ,borderRadius:"2rem"}}
-            href="#!"
-            role="button"
-          >
-            <i className="fab fa-twitter" />
-          </a>
-          {/* Google */}
-          <a
-            className="btn btn-primary btn-floating m-1"
-            style={{ backgroundColor: "#dd4b39" ,borderRadius:"2rem"}}
-            href="#!"
-            role="button"
-          >
-            <i className="fab fa-google" />
-          </a>
-          {/* Instagram */}
-          <a
-            className="btn btn-primary btn-floating m-1"
-            style={{ backgroundColor: "#ac2bac" ,borderRadius:"2rem"}}
-            href="#!"
-            role="button"
-          >
-            <i className="fab fa-instagram" />
-          </a>
-          {/* Linkedin */}
-          <a
-            className="btn btn-primary btn-floating m-1"
-            style={{ backgroundColor: "#0082ca" ,borderRadius:"2rem"}}
-            href="#!"
-            role="button"
-          >
-            <i className="fab fa-linkedin-in" />
-          </a>
-          {/* Github */}
-          <a
-            className="btn btn-primary btn-floating m-1"
-            style={{ backgroundColor: "#333333",borderRadius:"2rem" }}
-            href="#!"
-            role="button"
-          >
-            <i className="fab fa-github" />
-          </a>
+        {/* Section: CTA */}
+        <section className>
+          <p className="d-flex justify-content-center align-items-center">
+            <span className="me-3">Register for free</span>
+            <button type="button" className="btn btn-outline-light btn-rounded">
+              Sign up!
+            </button>
+          </p>
         </section>
-        {/* Section: Social media */}
+        {/* Section: CTA */}
       </div>
       {/* Grid container */}
       {/* Copyright */}
-      <div
-        className="text-center p-3"
-        style={{ backgroundColor: "rgba(0, 0, 0, 0.2)" }}
-      >
+      <div className="text-center p-3" style={{backgroundColor: 'rgba(0, 0, 0, 0.2)'}}>
         © 2020 Copyright:
-        <a className="text-white" href="https://mdbootstrap.com/">
-          MDBootstrap.com
-        </a>
+        <a className="text-white" href="https://mdbootstrap.com/">MDBootstrap.com</a>
       </div>
       {/* Copyright */}
     </footer>
+    {/* Footer */}
+  </section>
   );
 };
 

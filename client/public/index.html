@@ -34,9 +34,34 @@
     /> -->
     <title>React App</title>
   </head>
-  <body>
+  <style>
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background-color: transparent !important;
+      -webkit-border-radius: 10px;
+      border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      -webkit-border-radius: 10px;
+      border-radius: 10px;
+      background: #0a4275;
+    }
+  </style>
+  <body
+    style="
+      height: 100%;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    "
+  >
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
+
     <!-- MDB -->
     <script
       type="text/javascript"

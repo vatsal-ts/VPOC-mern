@@ -15,10 +15,12 @@ import { connect } from "react-redux";
 import CardGrid from "./pages/category";
 import SingleProduct from "./pages/singleproductPage.component";
 import Dashboard from "./pages/dashboard"
+import AddProduct from "./pages/AddProduct"
 import PrivateRoute from "./components/private-route/PrivateRoute";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
 import { setCurrentUser, logoutUser } from "./actions/authActions";
+import { Scrollbars } from 'react-custom-scrollbars';
 
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
@@ -48,14 +50,17 @@ function App() {
     <Provider store={store}>
       <Router>
         <Navbar />
+        
         <Routes>
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/dashboard" element={<Dashboard />} />
           {/* <switch><PrivateRoute exact path="/dashboard"  element={<Dashboard/>} /></switch> */}
           <Route path="/products/category/:category" element={<CardGrid/>} />
+          <Route path="/products/add/" element={<AddProduct/>} />
           <Route path="/products/product/:id" element={<SingleProduct />} />
         </Routes>
+        
         <Footer />
       </Router>
     </Provider>

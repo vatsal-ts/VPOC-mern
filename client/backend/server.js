@@ -26,8 +26,10 @@ require("./config/passport")(passport);
 // Routes
 const productsRouter = require('./routes/products');
 const usersRouter = require('./routes/users');
+const categoryRouter = require('./routes/category');
 
 app.use('/products', productsRouter);
+app.use('/category',categoryRouter);
 app.use('/', usersRouter);
 
 app.listen(port, () => {
