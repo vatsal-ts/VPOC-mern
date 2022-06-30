@@ -1,5 +1,30 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { registerUser } from "../../actions/authActions";
+import classnames from "classnames";
+import {
+  useLocation,
+  useNavigate,
+  useParams
+} from "react-router-dom";
+
+// function withRouter(Component) {
+//   function ComponentWithRouterProp(props) {
+//     let location = useLocation();
+//     let navigate = useNavigate();
+//     let params = useParams();
+//     return (
+//       <Component
+//         {...props}
+//         router={{ location, navigate, params }}
+//       />
+//     );
+//   }
+
+//   return ComponentWithRouterProp;
+// }
 
 class Register extends Component {
   constructor() {
@@ -11,6 +36,14 @@ class Register extends Component {
       password2: "",
       errors: {},
     };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.errors) {
+      this.setState({
+        errors: nextProps.errors
+      });
+    }
   }
 
   onChange = (e) => {
@@ -27,7 +60,8 @@ class Register extends Component {
       password2: this.state.password2,
     };
     
-    console.log(newUser);
+    // this.props.registerUser(newUser, this.props.history);
+    console.log(newUser)
   };
   
   render() {
@@ -49,32 +83,72 @@ class Register extends Component {
                         <div className="d-flex flex-row align-items-center mb-4">
                           <i className="fas fa-user fa-lg me-3 fa-fw" />
                           <div className="form-outline flex-fill mb-0">
-                            <input type="text" id="username" className="form-control" onChange={this.onChange} value={this.state.username} error={errors.username}/>
+                            <input type="text" 
+                                    id="username" 
+                                    className="form-control" 
+                                    onChange={this.onChange} 
+                                    value={this.state.username} 
+                                    error={errors.username}
+                                    // className={classnames("", {
+                                    //   invalid: errors.email
+                                    // })}
+                            />
                             <label className="form-label" htmlFor="username">Your UserName</label>
+                            <span className="red-text">{errors.username}</span>
                           </div>
                         </div>
 
                         <div className="d-flex flex-row align-items-center mb-4">
                           <i className="fas fa-envelope fa-lg me-3 fa-fw" />
                           <div className="form-outline flex-fill mb-0">
-                            <input type="email" id="email" className="form-control" onChange={this.onChange} value={this.state.email} error={errors.email}/>
+                            <input type="email" 
+                                  id="email" 
+                                  className="form-control" 
+                                  onChange={this.onChange}
+                                   value={this.state.email}
+                                    error={errors.email}
+                                    // className={classnames("", {
+                                    //   invalid: errors.email
+                                    // })}
+                            />
                             <label className="form-label" htmlFor="email">Your Email</label>
+                            <span className="red-text">{errors.email}</span>
                           </div>
                         </div>
 
                         <div className="d-flex flex-row align-items-center mb-4">
                           <i className="fas fa-lock fa-lg me-3 fa-fw" />
                           <div className="form-outline flex-fill mb-0">
-                            <input type="password" id="password" className="form-control" onChange={this.onChange} value={this.state.password} error={errors.password}/>
+                            <input type="password" 
+                                    id="password" 
+                                    className="form-control" 
+                                    onChange={this.onChange} 
+                                    value={this.state.password} 
+                                    error={errors.password}
+                                    // className={classnames("", {
+                                    //   invalid: errors.password
+                                    // })}
+                            />
                             <label className="form-label" htmlFor="password">Password</label>
+                            <span className="red-text">{errors.password}</span>
                           </div>
                         </div>
 
                         <div className="d-flex flex-row align-items-center mb-4">
                           <i className="fas fa-key fa-lg me-3 fa-fw" />
                           <div className="form-outline flex-fill mb-0">
-                            <input type="password" id="password2" className="form-control" onChange={this.onChange} value={this.state.password2} error={errors.password2}/>
+                            <input type="password" 
+                                    id="password2" 
+                                    className="form-control" 
+                                    onChange={this.onChange} 
+                                    value={this.state.password2} 
+                                    error={errors.password2}
+                                    // classnName={classnames("", {
+                                    //   invalid: errors.password2
+                                    // })}
+                            />
                             <label className="form-label" htmlFor="password2">Repeat your password</label>
+                            <span className="red-text">{errors.password2}</span>
                           </div>
                         </div>
 
@@ -107,4 +181,21 @@ class Register extends Component {
     );
   }
 }
+
+Register.propTypes = {
+  registerUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  auth: state.auth,
+  errors: state.errors
+});
+
+// export default connect(
+//   mapStateToProps,
+//   { registerUser }
+// )(Register);
+
 export default Register;

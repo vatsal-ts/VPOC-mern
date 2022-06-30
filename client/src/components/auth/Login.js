@@ -1,5 +1,9 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { loginUser } from "../../actions/authActions";
+import classnames from "classnames";
 
 class Login extends Component {
   constructor() {
@@ -10,6 +14,18 @@ class Login extends Component {
       errors: {},
     };
   }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.auth.isAuthenticated) {
+      this.props.history.push("/dashboard"); // push user to dashboard when they login
+    }
+    if (nextProps.errors) {
+          this.setState({
+            errors: nextProps.errors
+          });
+        }
+  }
+
   onChange = (e) => {
     this.setState({ [e.target.id]: e.target.value });
   };
@@ -20,6 +36,7 @@ class Login extends Component {
       password: this.state.password,
     };
 
+    // this.props.loginUser(userData);
     console.log(userData);
   };
   render() {
@@ -59,6 +76,10 @@ class Login extends Component {
                               onChange={this.onChange}
                               value={this.state.email}
                               error={errors.email}
+                              // className={classnames("", {
+                              //   invalid: errors.email || errors.emailnotfound
+                              // })}
+            
                             />
                             <label
                               className="form-label"
@@ -66,6 +87,10 @@ class Login extends Component {
                             >
                               Your Email
                             </label>
+                            <span className="red-text">
+                              {errors.email}
+                              {errors.emailnotfound}
+                            </span>
                           </div>
                         </div>
                         <div className="d-flex flex-row align-items-center mb-4">
@@ -78,6 +103,9 @@ class Login extends Component {
                               onChange={this.onChange}
                               value={this.state.password}
                               error={errors.password}
+                              // className={classnames("", {
+                              //   invalid: errors.password || errors.passwordincorrect
+                              // })}
                             />
                             <label
                               className="form-label"
@@ -85,6 +113,10 @@ class Login extends Component {
                             >
                               Password
                             </label>
+                            <span className="red-text">
+                              {errors.password}
+                              {errors.passwordincorrect}
+                            </span>
                           </div>
                         </div>
                         <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
@@ -119,4 +151,21 @@ class Login extends Component {
     );
   }
 }
+
+Login.propTypes = {
+  loginUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  auth: state.auth,
+  errors: state.errors
+});
+
+// export default connect(
+//   mapStateToProps,
+//   { loginUser }
+// )(Login);
+
 export default Login;
