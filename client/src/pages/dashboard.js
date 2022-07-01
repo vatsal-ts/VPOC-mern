@@ -229,9 +229,8 @@ class Dashboard extends Component {
                     <div className="card-body">
                       <p className="mb-4">
                         <span className="text-primary font-italic me-1">
-                          Available
+                          Products on sale by you
                         </span>{" "}
-                        Products
                       </p>
                       <div style={{ maxHeight: "400px", overflow: "scroll" }}>
                         <ul className="list-group list-group-light">
