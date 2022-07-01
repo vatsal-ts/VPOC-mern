@@ -2,28 +2,39 @@ import React, { Component } from "react";
 import axios from "axios";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
 class EditUserInfo extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      title: "",
-      description: "",
-      price: 0,
-      category: "",
-      productImage : "",
-      categorys: [],
+      username: "",
+      email: "",
+      address: 0,
+      profileImage: "",
+      phone : "",
+      name : "",
+      bio : "",
     };
 
     this.onChange = this.onChange.bind(this);
+    this.handlePhoto = this.handlePhoto.bind(this);
   }
 
   componentDidMount() {
     axios
-      .get("/category")
+      .get("/user/"+this.props.auth.user.id)
       .then((response) => {
-        this.setState({ categorys: response.data });
+        this.setState({ 
+          username : response.data.username,
+          phone : response.data.phone,
+          email : response.data.email,
+          profileImage : response.data.profileImage,
+          name : response.data.name,
+          address : response.data.address,
+          bio : response.data.bio,
+        });
       })
       .catch((error) => {
         console.log(error);
@@ -35,105 +46,115 @@ class EditUserInfo extends Component {
   };
 
   handlePhoto = (e) => {
-    this.setState({productImage: e.target.files[0]});
+    this.setState({profileImage: e.target.files[0]});
   };
 
   onSubmit = (e) => {
     e.preventDefault();
 
-    const product = {
-      title: this.state.title,
-      description: this.state.description,
-      price: this.state.price,
-      category: this.state.category,
-      sellerid: this.props.auth.user.id,
-      productImage : this.state.productImage
+    const userData = {
+      name: this.state.name,
+      username: this.state.username,
+      email: this.state.email,
+      phone: this.state.phone,
+      address: this.state.address,
+      profileImage : this.state.profileImage,
+      bio : this.state.bio
     };
 
-    console.log(product);
+    console.log(userData);
 
-    axios.post("/products/add", product).then((res) => console.log(res.data));
+    axios.post(`/update/${this.props.auth.user.id}`, userData).then((res) => console.log(res.data));
 
-    // window.location.href = '/dashboard';
+    window.location.href = '/dashboard';
   };
 
   render() {
     return (
       <div>
-        <h3>Add Product</h3>
+        <h3>Edit Info</h3>
         <form onSubmit={this.onSubmit} enctype="multipart/form-data">
           <div className="form-group">
-            <label htmlFor="productImage">photo: </label>
+            <label htmlFor="profileImage">ProfileImage: </label>
               <input 
                 type="file" 
-                required
                 accept=".png, .jpg, .jpeg"
-                name="productImage"
-                id = "productImage"
+                name="profileImage"
+                id = "profileImage"
                 className="form-control"
                 onChange={this.handlePhoto}
               />
           </div>
           <div className="form-group">
-            <label htmlFor="title">title: </label>
+            <label htmlFor="name">name: </label>
             <input
               type="text"
               required
               className="form-control"
-              id="title"
-              value={this.state.title}
+              id="name"
+              value={this.state.name}
               onChange={this.onChange}
             ></input>
           </div>
           <div className="form-group">
-            <label>Description: </label>
+            <label>Username: </label>
             <input
               type="text"
               required
               className="form-control"
-              id="description"
-              value={this.state.description}
+              id="username"
+              value={this.state.username}
               onChange={this.onChange}
             />
           </div>
           <div className="form-group">
-            <label>price: </label>
+            <label>address: </label>
             <input
               type="text"
               required
               className="form-control"
-              id="price"
-              value={this.state.price}
+              id="address"
+              value={this.state.address}
               onChange={this.onChange}
             />
           </div>
           <div className="form-group">
-            <label>Category: </label>
-            <div>
-              <select
-                ref="catInput"
-                required
-                className="form-control"
-                id="category"
-                value={this.state.category}
-                onChange={this.onChange}
-              >
-                <option value="" selected disabled hidden>Choose here</option>
-                {this.state.categorys.map((cat) => {
-                  return (
-                    <option key={cat.category} value={cat.category}>
-                      {cat.category}
-                    </option>
-                  );
-                })}
-              </select>
-            </div>
+            <label>phone: </label>
+            <input
+              type="text"
+              required
+              className="form-control"
+              id="phone"
+              value={this.state.phone}
+              onChange={this.onChange}
+            />
           </div>
-
+          <div className="form-group">
+            <label>email: </label>
+            <input
+              type="text"
+              required
+              className="form-control"
+              id="email"
+              value={this.state.email}
+              onChange={this.onChange}
+            />
+          </div>
+          <div className="form-group">
+            <label>bio: </label>
+            <input
+              type="text"
+              required
+              className="form-control"
+              id="bio"
+              value={this.state.bio}
+              onChange={this.onChange}
+            />
+          </div>
           <div className="form-group">
             <input
               type="submit"
-              value="Add Product"
+              value="Save"
               className="btn btn-primary"
             />
           </div>

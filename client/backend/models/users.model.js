@@ -9,6 +9,10 @@ const userSchema = new Schema({
         trim: true,
         minlength: 3,
     },
+    name : {
+        type : String,
+        trim: true,
+    },
     email: {
         type: String,
         trim: true,
@@ -40,7 +44,10 @@ const userSchema = new Schema({
         type :  String,
         
     },
-    image : {
+    profileImage : {
+        type : String
+    },
+    bio : {
         type : String
     }
 }, {

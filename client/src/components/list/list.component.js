@@ -1,8 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Listers = ({ item }) => {
+const Listers = ({ item ,onclick}) => {
     return (
+      <>
       <li className="list-group-item d-flex justify-content-between align-items-center">
         <div className="d-flex align-items-center">
           <img
@@ -20,6 +21,25 @@ const Listers = ({ item }) => {
           Details
         </Link>
       </li>
+      <li className="list-group-item d-flex align-items-center">
+      <Link to={`/products/update/${item._id}`}>
+      <button
+      type="button"
+      className="btn btn-outline-warning ms-1"
+      
+    >
+      Edit
+    </button>
+    </Link>
+    <button
+      type="button"
+      className="btn btn-outline-danger ms-1"
+      onClick={onclick}
+    >
+      Delete
+    </button>
+      </li>
+    </>
     );
 };
 
