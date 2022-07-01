@@ -3,7 +3,7 @@ import axios from "axios";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-class AddProduct extends Component {
+class EditUserInfo extends Component {
   constructor(props) {
     super(props);
 
@@ -143,7 +143,7 @@ class AddProduct extends Component {
   }
 }
 
-AddProduct.propTypes = {
+EditUserInfo.propTypes = {
   auth: PropTypes.object.isRequired,
 };
 
@@ -151,4 +151,4 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
 });
 
-export default connect(mapStateToProps)(AddProduct);
+export default connect(mapStateToProps)(EditUserInfo);
