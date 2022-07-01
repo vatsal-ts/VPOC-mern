@@ -23,6 +23,7 @@ class Dashboard extends Component {
       .then((response) => {
         console.log(response.data);
         this.setState({ buyed: response.data });
+        
       })
       .catch((error) => {
         console.log(error);
@@ -42,7 +43,7 @@ class Dashboard extends Component {
         }
         
         );
-        // console.log(responses.data)
+        console.log(this.state.toBeSold)
       })
       .catch((error) => {
         console.log(error);
