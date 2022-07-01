@@ -4,6 +4,7 @@ import axios from "axios";
 import CardComponent from "../components/Cards/CardGrid.component";
 import Banner from "../components/Banner/banner";
 import "../components/extrastyling/headerhover.css"
+
 class CardGrid extends Component {
   constructor(props) {
     super(props);
@@ -25,7 +26,7 @@ class CardGrid extends Component {
 
   productList() {
     return this.state.products.map((currentProduct) => {
-      return <CardComponent product={currentProduct} />;
+      return (!(currentProduct.buyerid))?<CardComponent product={currentProduct} />:"";
     });
   }
 
@@ -42,6 +43,7 @@ class CardGrid extends Component {
         >
           {this.productList()}
         </div>
+        
       </div>
     );
   }

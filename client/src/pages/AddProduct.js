@@ -14,6 +14,7 @@ class AddProduct extends Component {
       category: "",
       productImage: "",
       categorys: [],
+      productImageUrl: "",
     };
 
     this.onChange = this.onChange.bind(this);
@@ -36,6 +37,7 @@ class AddProduct extends Component {
 
   handlePhoto = (e) => {
     this.setState({ productImage: e.target.files[0] });
+    this.setState({ productImageURL: URL.createObjectURL(e.target.files[0]) });
   };
 
   onSubmit = (e) => {
@@ -50,23 +52,29 @@ class AddProduct extends Component {
       productImage: this.state.productImage,
     };
 
-    console.log(product);
+    console.log(this.state.productImageUrl);
 
     axios.post("/products/add", product).then((res) => console.log(res.data));
 
-    window.location.href = "/dashboard";
+    // window.location.href = "/dashboard";
   };
 
   render() {
     return (
-      <section className="get-in-touch">
-        <h1 className="title">Add Product you would like to sell</h1>
+      <section className="get-in-touch" style={{ padding: "30px" }}>
+        <h1 className="title">
+          Sell
+          <span style={{ color: "grey", fontWeight: "100" }}> a product</span>
+        </h1>
         <form
           className="contact-form row"
           onSubmit={this.onSubmit}
           enctype="multipart/form-data"
         >
-          <div className="form-group">
+          <div className="form-field col-lg-12 mx-auto" >
+            <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/14.jpg" class="img-fluid"></img>
+          </div>
+          <div className="form-field col-lg-12">
             <label htmlFor="productImage">Photos</label>
             <input
               type="file"
@@ -77,6 +85,8 @@ class AddProduct extends Component {
               className="form-control"
               onChange={this.handlePhoto}
             />
+            {/* <img src={this.state.productImageUrl}></img>
+             */}
           </div>
           <div className="form-field col-lg-12">
             <input
@@ -97,7 +107,7 @@ class AddProduct extends Component {
               type="text"
               required
               id="price"
-              value={`${this.state.price!==0?this.state.price:""}`}
+              value={`${this.state.price !== 0 ? this.state.price : ""}`}
               onChange={this.onChange}
             />
             <label className="label" htmlFor="email">
@@ -106,26 +116,27 @@ class AddProduct extends Component {
           </div>
 
           <div className="form-field col-lg-6 ">
-              <select
-                ref="catInput"
-                required
-                className="form-control"
-                id="category"
-                value={this.state.category}
-                onChange={this.onChange}
-              >
-                <option value="" selected disabled hidden>Choose Category</option>
-                {this.state.categorys.map((cat) => {
-                  return (
-                    <option key={cat.category} value={cat.category}>
-                      {cat.category}
-                    </option>
-                  );
-                })}
-              </select>
-            </div>
+            <select
+              ref="catInput"
+              required
+              className="form-control"
+              id="category"
+              value={this.state.category}
+              onChange={this.onChange}
+            >
+              <option value="" selected disabled hidden>
+                Choose Category
+              </option>
+              {this.state.categorys.map((cat) => {
+                return (
+                  <option key={cat.category} value={cat.category}>
+                    {cat.category}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
 
-          
           {/* <div className="form-field col-lg-6 ">
             <input
               id="company"
@@ -150,7 +161,7 @@ class AddProduct extends Component {
           </div> */}
           <div className="form-field col-lg-12">
             <textarea
-              style={{ height: "60px" }}
+              //   style={{ height: "60px" }}
               id="description"
               value={this.state.description}
               onChange={this.onChange}

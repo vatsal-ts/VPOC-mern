@@ -1,39 +1,40 @@
-import React, { Component } from 'react';
-import axios from 'axios';
-import { Link,useParams } from "react-router-dom";
+import React, { Component } from "react";
+import axios from "axios";
+import { Link, useParams } from "react-router-dom";
 
 class EditProduct extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-        title: "",
-        description: "",
-        price: 0,
-        category: "",
-        productImage : "",
-        categorys: [],
-      };
+      title: "",
+      description: "",
+      price: 0,
+      category: "",
+      productImage: "",
+      categorys: [],
+    };
 
-      this.onSubmit = this.onSubmit.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
   }
 
   componentDidMount() {
-    axios.get("/products/" + this.props.params.id)
+    axios
+      .get("/products/" + this.props.params.id)
       .then((response) => {
-        this.setState({ 
-            title : response.data.title,
-            description : response.data.description,
-            price : response.data.price,
-            category : response.data.category,
-            productImage : response.data.productImage
+        this.setState({
+          title: response.data.title,
+          description: response.data.description,
+          price: response.data.price,
+          category: response.data.category,
+          productImage: response.data.productImage,
         });
       })
       .catch((error) => {
         console.log(error);
       });
 
-      axios
+    axios
       .get("/category")
       .then((response) => {
         this.setState({ categorys: response.data });
@@ -48,32 +49,43 @@ class EditProduct extends Component {
   };
 
   handlePhoto = (e) => {
-    this.setState({productImage: e.target.files[0]});
+    // this.setState({productImage: e.target.files[0]});
+    this.setState({
+      productImage: e.target.files[0],
+      productImageURL: URL.createObjectURL(e.target.files[0]),
+    });
   };
 
   onSubmit(e) {
     e.preventDefault();
 
     const product = {
-        title: this.state.title,
-        description: this.state.description,
-        price: this.state.price,
-        category: this.state.category,
-        productImage : this.state.productImage
+      title: this.state.title,
+      description: this.state.description,
+      price: this.state.price,
+      category: this.state.category,
+      productImage: this.state.productImage,
     };
 
-    console.log(product);
+    console.log(this.state.productImage);
 
-    axios.post('/products/update/' + this.props.params.id, product)
-      .then(res => console.log(res.data));
+    // axios
+    //   .post("/products/update/" + this.props.params.id, product)
+    //   .then((res) => console.log(res.data));
 
-    window.location.href = "/products/product/" + this.props.params.id;
+    // window.location.href = "/products/product/" + this.props.params.id;
   }
 
   render() {
     return (
-        <section className="get-in-touch">
-        <h1 className="title">Edit your product</h1>
+      <section className="get-in-touch" style={{padding:"30px"}}>
+        <h1 className="title">
+          Edit{" "}
+          <span style={{ color: "grey", fontWeight: "100" }}>
+            {" "}
+            your product
+          </span>
+        </h1>
         <form
           className="contact-form row"
           onSubmit={this.onSubmit}
@@ -91,6 +103,7 @@ class EditProduct extends Component {
               onChange={this.handlePhoto}
             />
           </div>
+          <img src={this.state.productImageUrl}></img>
           <div className="form-field col-lg-12">
             <input
               type="text"
@@ -110,7 +123,7 @@ class EditProduct extends Component {
               type="text"
               required
               id="price"
-              value={`${this.state.price!==0?this.state.price:""}`}
+              value={`${this.state.price !== 0 ? this.state.price : ""}`}
               onChange={this.onChange}
             />
             <label className="label" htmlFor="email">
@@ -119,26 +132,27 @@ class EditProduct extends Component {
           </div>
 
           <div className="form-field col-lg-6 ">
-              <select
-                ref="catInput"
-                required
-                className="form-control"
-                id="category"
-                value={this.state.category}
-                onChange={this.onChange}
-              >
-                <option value="" selected disabled hidden>Choose Category</option>
-                {this.state.categorys.map((cat) => {
-                  return (
-                    <option key={cat.category} value={cat.category}>
-                      {cat.category}
-                    </option>
-                  );
-                })}
-              </select>
-            </div>
+            <select
+              ref="catInput"
+              required
+              className="form-control"
+              id="category"
+              value={this.state.category}
+              onChange={this.onChange}
+            >
+              <option value="" selected disabled hidden>
+                Choose Category
+              </option>
+              {this.state.categorys.map((cat) => {
+                return (
+                  <option key={cat.category} value={cat.category}>
+                    {cat.category}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
 
-          
           {/* <div className="form-field col-lg-6 ">
             <input
               id="company"
@@ -163,7 +177,7 @@ class EditProduct extends Component {
           </div> */}
           <div className="form-field col-lg-12">
             <textarea
-              style={{ height: "60px" }}
+              // style={{ height: "60px" }}
               id="description"
               value={this.state.description}
               onChange={this.onChange}
@@ -184,7 +198,7 @@ class EditProduct extends Component {
           </div>
         </form>
       </section>
-    )
+    );
   }
 }
 

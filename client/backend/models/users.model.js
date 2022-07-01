@@ -11,6 +11,7 @@ const userSchema = new Schema({
     },
     name : {
         type : String,
+        default:"Adam/Eve",
         trim: true,
     },
     email: {
@@ -32,6 +33,7 @@ const userSchema = new Schema({
     },
     phone: {
         type: String,
+        deafult:"000-0000-000"
         // validate: {
         //   validator: function(v) {
         //     return /\d{3}-\d{3}-\d{4}/.test(v);
@@ -42,13 +44,17 @@ const userSchema = new Schema({
     },
     address: {
         type :  String,
+        default:"Dummy Number, Dummy Street, Dummy City, Dummy Country, Dummy Pincode Dummy Phone Number"
         
     },
     profileImage : {
-        type : String
+        type : String,
+        default:"arrey default se ma chudi padi hui hai"
+        // please edit
     },
     bio : {
-        type : String
+        type : String,
+        deafult:"Hey! I am enjoying VPOC!"
     }
 }, {
     timestamps: true,

@@ -13,9 +13,9 @@ class EditUserInfo extends Component {
       email: "",
       address: 0,
       profileImage: "",
-      phone : "",
-      name : "",
-      bio : "",
+      phone: "",
+      name: "",
+      bio: "",
     };
 
     this.onChange = this.onChange.bind(this);
@@ -24,16 +24,16 @@ class EditUserInfo extends Component {
 
   componentDidMount() {
     axios
-      .get("/user/"+this.props.auth.user.id)
+      .get("/user/" + this.props.auth.user.id)
       .then((response) => {
-        this.setState({ 
-          username : response.data.username,
-          phone : response.data.phone,
-          email : response.data.email,
-          profileImage : response.data.profileImage,
-          name : response.data.name,
-          address : response.data.address,
-          bio : response.data.bio,
+        this.setState({
+          username: response.data.username,
+          phone: response.data.phone,
+          email: response.data.email,
+          profileImage: response.data.profileImage,
+          name: response.data.name,
+          address: response.data.address,
+          bio: response.data.bio,
         });
       })
       .catch((error) => {
@@ -46,7 +46,7 @@ class EditUserInfo extends Component {
   };
 
   handlePhoto = (e) => {
-    this.setState({profileImage: e.target.files[0]});
+    this.setState({ profileImage: e.target.files[0] });
   };
 
   onSubmit = (e) => {
@@ -58,108 +58,167 @@ class EditUserInfo extends Component {
       email: this.state.email,
       phone: this.state.phone,
       address: this.state.address,
-      profileImage : this.state.profileImage,
-      bio : this.state.bio
+      profileImage: this.state.profileImage,
+      bio: this.state.bio,
     };
 
     console.log(userData);
 
-    axios.post(`/update/${this.props.auth.user.id}`, userData).then((res) => console.log(res.data));
+    axios
+      .post(`/update/${this.props.auth.user.id}`, userData)
+      .then((res) => console.log(res.data));
 
-    window.location.href = '/dashboard';
+    window.location.href = "/dashboard";
   };
 
   render() {
     return (
-      <div>
-        <h3>Edit Info</h3>
-        <form onSubmit={this.onSubmit} enctype="multipart/form-data">
-          <div className="form-group">
-            <label htmlFor="profileImage">ProfileImage: </label>
-              <input 
-                type="file" 
-                accept=".png, .jpg, .jpeg"
-                name="profileImage"
-                id = "profileImage"
-                className="form-control"
-                onChange={this.handlePhoto}
-              />
+      <section className="get-in-touch" style={{ padding: "30px" }}>
+        <h1 className="title">
+          Sell
+          <span style={{ color: "grey", fontWeight: "100" }}> a product</span>
+        </h1>
+        <form
+          className="contact-form row"
+          onSubmit={this.onSubmit}
+          enctype="multipart/form-data"
+        >
+          <div className="form-field col-lg-12 mx-auto">
+            <img
+              src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/14.jpg"
+              class="img-fluid"
+            ></img>
           </div>
-          <div className="form-group">
-            <label htmlFor="name">name: </label>
+          <div className="form-field col-lg-12">
+            <label htmlFor="profileImage">ProfileImage: </label>
             <input
+              type="file"
+              accept=".png, .jpg, .jpeg"
+              name="profileImage"
+              id="profileImage"
+              className="form-control"
+              onChange={this.handlePhoto}
+            />
+            {/* <img src={this.state.productImageUrl}></img>
+             */}
+          </div>
+          <div className="form-field col-lg-4">
+            <input
+              className="input-text js-input"
               type="text"
               required
-              className="form-control"
               id="name"
               value={this.state.name}
               onChange={this.onChange}
-            ></input>
+            />
+            <label className="label" htmlFor="name">
+              Name
+            </label>
           </div>
-          <div className="form-group">
-            <label>Username: </label>
+
+          <div className="form-field col-lg-4">
             <input
+              className="input-text js-input"
               type="text"
               required
-              className="form-control"
               id="username"
               value={this.state.username}
               onChange={this.onChange}
             />
+            <label className="label" htmlFor="username">
+              Username
+            </label>
           </div>
-          <div className="form-group">
-            <label>address: </label>
-            <input
+
+          <div className="form-field col-lg-4">
+          <input
+              className="input-text js-input"
               type="text"
               required
-              className="form-control"
-              id="address"
-              value={this.state.address}
-              onChange={this.onChange}
-            />
-          </div>
-          <div className="form-group">
-            <label>phone: </label>
-            <input
-              type="text"
-              required
-              className="form-control"
               id="phone"
               value={this.state.phone}
               onChange={this.onChange}
             />
+            <label className="label" htmlFor="phone">
+              Phone
+            </label>
           </div>
-          <div className="form-group">
-            <label>email: </label>
-            <input
+
+          <div className="form-field col-lg-6 ">
+          <input
+              className="input-text js-input"
               type="text"
               required
-              className="form-control"
               id="email"
               value={this.state.email}
               onChange={this.onChange}
             />
+            <label className="label" htmlFor="email">
+              email
+            </label>
           </div>
-          <div className="form-group">
-            <label>bio: </label>
+
+          {/* <div className="form-field col-lg-6 ">
             <input
+              id="company"
+              className="input-text js-input"
               type="text"
               required
-              className="form-control"
+            />
+            <label className="label" htmlFor="company">
+              Company Name
+            </label>
+          </div>
+          <div className="form-field col-lg-6 ">
+            <input
+              id="phone"
+              className="input-text js-input"
+              type="text"
+              required
+            />
+            <label className="label" htmlFor="phone">
+              Contact Number
+            </label>
+          </div> */}
+          <div className="form-field col-lg-12">
+            <textarea
+              //   style={{ height: "60px" }}
+              className="area-text js-input"
+              type="text"
+              required
               id="bio"
               value={this.state.bio}
               onChange={this.onChange}
             />
+            <label className="label" htmlFor="bio">
+              Bio
+            </label>
           </div>
-          <div className="form-group">
+
+          <div className="form-field col-lg-12">
+            <textarea
+              //   style={{ height: "60px" }}
+              className="area-text js-input"
+              type="text"
+              required
+              id="address"
+              value={this.state.address}
+              onChange={this.onChange}
+            />
+            <label className="label" htmlFor="address">
+              Address
+            </label>
+          </div>
+
+          <div className="form-field col-lg-12">
             <input
               type="submit"
               value="Save"
-              className="btn btn-primary"
+              class="btn btn-primary btn-lg active"
             />
           </div>
         </form>
-      </div>
+      </section>
     );
   }
 }

@@ -200,15 +200,6 @@ class Dashboard extends Component {
                       <p className="mb-0">Phone</p>
                     </div>
                     <div className="col-sm-9">
-                      <p className="text-muted mb-0">{this.state.bio}</p>
-                    </div>
-                  </div>
-                  <hr />
-                  <div className="row">
-                    <div className="col-sm-3">
-                      <p className="mb-0">Mobile</p>
-                    </div>
-                    <div className="col-sm-9">
                       <p className="text-muted mb-0">{this.state.phone}</p>
                     </div>
                   </div>
