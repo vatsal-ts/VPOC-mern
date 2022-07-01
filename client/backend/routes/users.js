@@ -131,10 +131,9 @@ router.route("/update/:id").post((req, res) => {
     .then((user) => {
       user.username = req.body.username;
       user.email = req.body.email;
-      user.password = req.body.password;
-      // user.phone = req.body.phone;
-      // user.address = req.body.address;
-      // user.image = req.body.image;
+      user.phone = req.body.phone;
+      user.address = req.body.address;
+      user.image = req.body.image;
       // user.image = "default_url" (to update default url)
 
       user

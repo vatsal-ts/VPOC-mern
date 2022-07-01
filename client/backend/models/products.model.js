@@ -20,7 +20,7 @@ const ProductSchema = new Schema({
         type: String,
         required:true
     },
-    images: {
+    productImage: {
         type: String,
     },
     sellerid: {

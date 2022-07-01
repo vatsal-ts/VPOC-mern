@@ -1,26 +1,39 @@
-import React, { Component } from "react";
-import axios from "axios";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
+import React, { Component } from 'react';
+import axios from 'axios';
+import { Link,useParams } from "react-router-dom";
 
-class AddProduct extends Component {
+class EditProduct extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      title: "",
-      description: "",
-      price: 0,
-      category: "",
-      productImage : "",
-      categorys: [],
-    };
+        title: "",
+        description: "",
+        price: 0,
+        category: "",
+        productImage : "",
+        categorys: [],
+      };
 
-    this.onChange = this.onChange.bind(this);
+      this.onSubmit = this.onSubmit.bind(this);
   }
 
   componentDidMount() {
-    axios
+    axios.get("/products/" + this.props.params.id)
+      .then((response) => {
+        this.setState({ 
+            title : response.data.title,
+            description : response.data.description,
+            price : response.data.price,
+            category : response.data.category,
+            productImage : response.data.productImage
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+      axios
       .get("/category")
       .then((response) => {
         this.setState({ categorys: response.data });
@@ -38,29 +51,29 @@ class AddProduct extends Component {
     this.setState({productImage: e.target.files[0]});
   };
 
-  onSubmit = (e) => {
+  onSubmit(e) {
     e.preventDefault();
 
     const product = {
-      title: this.state.title,
-      description: this.state.description,
-      price: this.state.price,
-      category: this.state.category,
-      sellerid: this.props.auth.user.id,
-      productImage : this.state.productImage
+        title: this.state.title,
+        description: this.state.description,
+        price: this.state.price,
+        category: this.state.category,
+        productImage : this.state.productImage
     };
 
     console.log(product);
 
-    axios.post("/products/add", product).then((res) => console.log(res.data));
+    axios.post('/products/update/' + this.props.params.id, product)
+      .then(res => console.log(res.data));
 
-    // window.location.href = '/dashboard';
-  };
+    window.location.href = "/products/product/" + this.props.params.id;
+  }
 
   render() {
     return (
-      <div>
-        <h3>Add Product</h3>
+        <div>
+        <h3>Edit Product</h3>
         <form onSubmit={this.onSubmit} enctype="multipart/form-data">
           <div className="form-group">
             <label htmlFor="productImage">photo: </label>
@@ -133,22 +146,14 @@ class AddProduct extends Component {
           <div className="form-group">
             <input
               type="submit"
-              value="Add Product"
+              value="Edit Product"
               className="btn btn-primary"
             />
           </div>
         </form>
       </div>
-    );
+    )
   }
 }
 
-AddProduct.propTypes = {
-  auth: PropTypes.object.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  auth: state.auth,
-});
-
-export default connect(mapStateToProps)(AddProduct);
+export default (props) => <EditProduct {...props} params={useParams()} />;
