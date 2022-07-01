@@ -15,6 +15,8 @@ class Dashboard extends Component {
       buyed: [],
       toBeSold: [],
     };
+
+    this.myList = this.myList.bind(this)
   }
 
   componentDidMount() {
@@ -28,6 +30,7 @@ class Dashboard extends Component {
         console.log(error);
       });
 
+    
     axios
       .get("/products/seller/" + this.props.auth.user.id)
       .then((responses) => {
@@ -35,9 +38,13 @@ class Dashboard extends Component {
         this.setState({ selled: [], toBeSold: [] });
         responses.data.forEach((response) => {
           if (response.buyerid) {
-            this.setState({ selled: [...this.state.selled, response] });
+            this.setState(previousState => ({
+              selled : [...previousState.selled, response]
+          }));
           } else {
-            this.setState({ toBeSold: [...this.state.toBeSold, response] });
+            this.setState(previousState => ({
+              toBeSold : [...previousState.toBeSold, response]
+          }));
           }
         }
         
@@ -47,14 +54,16 @@ class Dashboard extends Component {
       .catch((error) => {
         console.log(error);
       });
+
+      console.log(this.state.buyed)
+      console.log(this.state.selled)
+      console.log(this.state.toBeSold)
   }
 
   myList(items){
-    return <ul className="list-group list-group-light">
-        {items.map((item, index) => {
-      <Listers item={item}/>
-        })}
-    </ul>
+    return items.map((item) => {
+      return <Listers item={item}/>
+        })
   }
 
   onLogoutClick = (e) => {
@@ -197,7 +206,9 @@ class Dashboard extends Component {
                         </span>{" "}
                         Products
                       </p>
+                      <ul className="list-group list-group-light">
                       {this.myList(this.state.toBeSold)}
+                      </ul>
                     </div>
                   </div>
                 </div>
@@ -209,12 +220,16 @@ class Dashboard extends Component {
                           Sold
                         </span>{" "}
                         Products
+                        <ul className="list-group list-group-light">
                         {this.myList(this.state.selled)}
+                        </ul>
                         <span className="text-primary font-italic me-1">
                           Purchased
                         </span>{" "}
                         Products
+                        <ul className="list-group list-group-light">
                         {this.myList(this.state.buyed)}
+                        </ul>
                     </div>
                   </div>
                 </div>
