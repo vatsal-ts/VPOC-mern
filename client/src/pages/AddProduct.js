@@ -54,7 +54,7 @@ class AddProduct extends Component {
 
     axios.post("/products/add", product).then((res) => console.log(res.data));
 
-    // window.location.href = '/dashboard';
+    window.location.href = '/dashboard';
   };
 
   render() {
