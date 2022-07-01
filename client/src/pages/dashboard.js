@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import axios from "axios";
 import { logoutUser } from "../actions/authActions";
-import Listers from "../components/list/list.component"
+import Listers from "../components/list/list.component";
 import { Link } from "react-router-dom";
 
 class Dashboard extends Component {
@@ -19,9 +19,9 @@ class Dashboard extends Component {
       email: "",
       address: 0,
       profileImage: "",
-      phone : "",
-      name : "",
-      bio : "",
+      phone: "",
+      name: "",
+      bio: "",
     };
 
     this.myList = this.myList.bind(this);
@@ -30,34 +30,32 @@ class Dashboard extends Component {
 
   componentDidMount() {
     axios
-    .get("/user/"+this.props.auth.user.id)
-    .then((response) => {
-      this.setState({ 
-        username : response.data.username,
-        phone : response.data.phone,
-        email : response.data.email,
-        profileImage : response.data.profileImage,
-        name : response.data.name,
-        address : response.data.address,
-        bio : response.data.bio
+      .get("/user/" + this.props.auth.user.id)
+      .then((response) => {
+        this.setState({
+          username: response.data.username,
+          phone: response.data.phone,
+          email: response.data.email,
+          profileImage: response.data.profileImage,
+          name: response.data.name,
+          address: response.data.address,
+          bio: response.data.bio,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
       });
-    })
-    .catch((error) => {
-      console.log(error);
-    });
 
     axios
       .get("/products/buyer/" + this.props.auth.user.id)
       .then((response) => {
         console.log(response.data);
         this.setState({ buyed: response.data });
-        
       })
       .catch((error) => {
         console.log(error);
       });
 
-    
     axios
       .get("/products/seller/" + this.props.auth.user.id)
       .then((responses) => {
@@ -65,35 +63,33 @@ class Dashboard extends Component {
         this.setState({ selled: [], toBeSold: [] });
         responses.data.forEach((response) => {
           if (response.buyerid) {
-            this.setState(previousState => ({
-              selled : [...previousState.selled, response]
-          }));
+            this.setState((previousState) => ({
+              selled: [...previousState.selled, response],
+            }));
           } else {
-            this.setState(previousState => ({
-              toBeSold : [...previousState.toBeSold, response]
-          }));
+            this.setState((previousState) => ({
+              toBeSold: [...previousState.toBeSold, response],
+            }));
           }
-        }
-        
-        );
-        console.log(this.state.toBeSold)
+        });
+        console.log(this.state.toBeSold);
       })
       .catch((error) => {
         console.log(error);
       });
 
-      console.log(this.state.buyed)
-      console.log(this.state.selled)
-      console.log(this.state.toBeSold)
+    console.log(this.state.buyed);
+    console.log(this.state.selled);
+    console.log(this.state.toBeSold);
   }
 
-  myList(items){
+  myList(items) {
     return items.map((item) => {
-      return <Listers item={item} onclick={this.onDelete(item._id)}/>
-        })
+      return <Listers item={item} onclick={this.onDelete(item._id)} />;
+    });
   }
 
-  onDelete(id){
+  onDelete(id) {
     console.log(id);
   }
 
@@ -103,7 +99,6 @@ class Dashboard extends Component {
     this.props.logoutUser();
   };
 
-  
   render() {
     return (
       <section style={{ backgroundColor: "#eee" }}>
@@ -130,12 +125,12 @@ class Dashboard extends Component {
                       Logout
                     </button>
                     <Link to="/user/edit">
-                    <button
-                      type="button"
-                      className="btn btn-outline-primary ms-1"
-                    >
-                      Edit
-                    </button>
+                      <button
+                        type="button"
+                        className="btn btn-outline-primary ms-1"
+                      >
+                        Edit
+                      </button>
                     </Link>
                   </div>
                 </div>
@@ -238,30 +233,36 @@ class Dashboard extends Component {
                         </span>{" "}
                         Products
                       </p>
-                      <ul className="list-group list-group-light">
-                      {this.myList(this.state.toBeSold)}
-                      </ul>
+                      <div style={{ maxHeight: "400px", overflow: "scroll" }}>
+                        <ul className="list-group list-group-light">
+                          {this.myList(this.state.toBeSold)}
+                        </ul>
+                      </div>
                     </div>
                   </div>
                 </div>
                 <div className="col-md-6">
                   <div className="card mb-4 mb-md-0">
                     <div className="card-body">
-                      
-                        <span className="text-primary font-italic me-1">
-                          Sold
-                        </span>{" "}
-                        Products
+                      <span className="text-primary font-italic me-1">
+                        Sold
+                      </span>{" "}
+                      Products
+                      <div style={{ maxHeight: "200px", overflow: "scroll" }}>
                         <ul className="list-group list-group-light">
-                        {this.myList(this.state.selled)}
+                          {this.myList(this.state.selled)}
                         </ul>
-                        <span className="text-primary font-italic me-1">
-                          Purchased
-                        </span>{" "}
-                        Products
+                      </div>
+                      <span className="text-primary font-italic me-1">
+                        Purchased
+                      </span>{" "}
+                      Products
+                      <div style={{ maxHeight: "200px", overflow: "scroll" }}>
+                        {" "}
                         <ul className="list-group list-group-light">
-                        {this.myList(this.state.buyed)}
+                          {this.myList(this.state.buyed)}
                         </ul>
+                      </div>
                     </div>
                   </div>
                 </div>
