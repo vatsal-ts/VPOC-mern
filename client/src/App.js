@@ -17,6 +17,7 @@ import SingleProduct from "./pages/singleproductPage.component";
 import Dashboard from "./pages/dashboard"
 import AddProduct from "./pages/AddProduct"
 import EditProduct from "./pages/EditProduct"
+import EditUserInfo from "./pages/EditUserInfo"
 import PrivateRoute from "./components/private-route/PrivateRoute";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
@@ -61,6 +62,7 @@ function App() {
           <Route path="/products/add/" element={<AddProduct/>} />
           <Route path="/products/product/:id" element={<SingleProduct />} />
           <Route path="/products/update/:id" element={<EditProduct />} />
+          <Route path="/user/edit/" element={<EditUserInfo />} />
         </Routes>
         
         <Footer />

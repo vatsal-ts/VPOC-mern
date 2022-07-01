@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import axios from "axios";
 import { logoutUser } from "../actions/authActions";
 import Listers from "../components/list/list.component"
+import { Link } from "react-router-dom";
 
 class Dashboard extends Component {
   constructor(props) {
@@ -14,12 +15,37 @@ class Dashboard extends Component {
       selled: [],
       buyed: [],
       toBeSold: [],
+      username: "",
+      email: "",
+      address: 0,
+      profileImage: "",
+      phone : "",
+      name : "",
+      bio : "",
     };
 
-    this.myList = this.myList.bind(this)
+    this.myList = this.myList.bind(this);
+    this.onDelete = this.onDelete.bind(this);
   }
 
   componentDidMount() {
+    axios
+    .get("/user/"+this.props.auth.user.id)
+    .then((response) => {
+      this.setState({ 
+        username : response.data.username,
+        phone : response.data.phone,
+        email : response.data.email,
+        profileImage : response.data.profileImage,
+        name : response.data.name,
+        address : response.data.address,
+        bio : response.data.bio
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+
     axios
       .get("/products/buyer/" + this.props.auth.user.id)
       .then((response) => {
@@ -62,8 +88,12 @@ class Dashboard extends Component {
 
   myList(items){
     return items.map((item) => {
-      return <Listers item={item}/>
+      return <Listers item={item} onclick={this.onDelete(item._id)}/>
         })
+  }
+
+  onDelete(id){
+    console.log(id);
   }
 
   onLogoutClick = (e) => {
@@ -74,7 +104,6 @@ class Dashboard extends Component {
 
   
   render() {
-    const { user } = this.props.auth;
     return (
       <section style={{ backgroundColor: "#eee" }}>
         <div className="container py-4">
@@ -88,8 +117,8 @@ class Dashboard extends Component {
                     className="rounded-circle img-fluid"
                     style={{ width: "150px" }}
                   />
-                  <h5 className="my-3">{user.username}</h5>
-                  <p className="text-muted mb-1">{user.bio}</p>
+                  <h5 className="my-3">{this.state.username}</h5>
+                  <p className="text-muted mb-1">{this.state.bio}</p>
                   {/* <p className="text-muted mb-4">Bay Area, San Francisco, CA</p> */}
                   <div className="d-flex justify-content-center mb-2">
                     <button
@@ -99,12 +128,14 @@ class Dashboard extends Component {
                     >
                       Logout
                     </button>
+                    <Link to="/user/edit">
                     <button
                       type="button"
                       className="btn btn-outline-primary ms-1"
                     >
                       Edit
                     </button>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -152,10 +183,10 @@ class Dashboard extends Component {
                 <div className="card-body">
                   <div className="row">
                     <div className="col-sm-3">
-                      <p className="mb-0">Full Name</p>
+                      <p className="mb-0">Full Name: </p>
                     </div>
                     <div className="col-sm-9">
-                      <p className="text-muted mb-0">{user.username}</p>
+                      <p className="text-muted mb-0">{this.state.name}</p>
                     </div>
                   </div>
                   <hr />
@@ -164,7 +195,7 @@ class Dashboard extends Component {
                       <p className="mb-0">Email</p>
                     </div>
                     <div className="col-sm-9">
-                      <p className="text-muted mb-0">{user.email}</p>
+                      <p className="text-muted mb-0">{this.state.email}</p>
                     </div>
                   </div>
                   <hr />
@@ -173,7 +204,7 @@ class Dashboard extends Component {
                       <p className="mb-0">Phone</p>
                     </div>
                     <div className="col-sm-9">
-                      <p className="text-muted mb-0">{user.phone}</p>
+                      <p className="text-muted mb-0">{this.state.bio}</p>
                     </div>
                   </div>
                   <hr />
@@ -182,7 +213,7 @@ class Dashboard extends Component {
                       <p className="mb-0">Mobile</p>
                     </div>
                     <div className="col-sm-9">
-                      <p className="text-muted mb-0">{user.mobile}</p>
+                      <p className="text-muted mb-0">{this.state.phone}</p>
                     </div>
                   </div>
                   <hr />
@@ -191,7 +222,7 @@ class Dashboard extends Component {
                       <p className="mb-0">Address</p>
                     </div>
                     <div className="col-sm-9">
-                      <p className="text-muted mb-0">{user.address}</p>
+                      <p className="text-muted mb-0">{this.state.address}</p>
                     </div>
                   </div>
                 </div>
