@@ -72,53 +72,57 @@ class EditProduct extends Component {
 
   render() {
     return (
-        <section className="get-in-touch">
-        <h1 className="title">Edit your product</h1>
-        <form
-          className="contact-form row"
-          onSubmit={this.onSubmit}
-          enctype="multipart/form-data"
-        >
+        <div>
+        <h3>Edit Product</h3>
+        <form onSubmit={this.onSubmit} enctype="multipart/form-data">
           <div className="form-group">
-            <label htmlFor="productImage">Photos</label>
-            <input
-              type="file"
-              required
-              accept=".png, .jpg, .jpeg"
-              name="productImage"
-              id="productImage"
-              className="form-control"
-              onChange={this.handlePhoto}
-            />
+            <label htmlFor="productImage">photo: </label>
+              <input 
+                type="file" 
+                required
+                accept=".png, .jpg, .jpeg"
+                name="productImage"
+                id = "productImage"
+                className="form-control"
+                onChange={this.handlePhoto}
+              />
           </div>
-          <div className="form-field col-lg-12">
+          <div className="form-group">
+            <label htmlFor="title">title: </label>
             <input
               type="text"
               required
-              className="input-text js-input"
+              className="form-control"
               id="title"
               value={this.state.title}
               onChange={this.onChange}
-            />
-            <label className="label" htmlFor="title">
-              Title
-            </label>
+            ></input>
           </div>
-          <div className="form-field col-lg-6 ">
+          <div className="form-group">
+            <label>Description: </label>
             <input
-              className="input-text js-input"
               type="text"
               required
-              id="price"
-              value={`${this.state.price!==0?this.state.price:""}`}
+              className="form-control"
+              id="description"
+              value={this.state.description}
               onChange={this.onChange}
             />
-            <label className="label" htmlFor="email">
-              Price
-            </label>
           </div>
-
-          <div className="form-field col-lg-6 ">
+          <div className="form-group">
+            <label>price: </label>
+            <input
+              type="text"
+              required
+              className="form-control"
+              id="price"
+              value={this.state.price}
+              onChange={this.onChange}
+            />
+          </div>
+          <div className="form-group">
+            <label>Category: </label>
+            <div>
               <select
                 ref="catInput"
                 required
@@ -127,7 +131,7 @@ class EditProduct extends Component {
                 value={this.state.category}
                 onChange={this.onChange}
               >
-                <option value="" selected disabled hidden>Choose Category</option>
+                <option value="" selected disabled hidden>Choose here</option>
                 {this.state.categorys.map((cat) => {
                   return (
                     <option key={cat.category} value={cat.category}>
@@ -137,53 +141,17 @@ class EditProduct extends Component {
                 })}
               </select>
             </div>
+          </div>
 
-          
-          {/* <div className="form-field col-lg-6 ">
+          <div className="form-group">
             <input
-              id="company"
-              className="input-text js-input"
-              type="text"
-              required
-            />
-            <label className="label" htmlFor="company">
-              Company Name
-            </label>
-          </div>
-          <div className="form-field col-lg-6 ">
-            <input
-              id="phone"
-              className="input-text js-input"
-              type="text"
-              required
-            />
-            <label className="label" htmlFor="phone">
-              Contact Number
-            </label>
-          </div> */}
-          <div className="form-field col-lg-12">
-            <textarea
-              style={{ height: "60px" }}
-              id="description"
-              value={this.state.description}
-              onChange={this.onChange}
-              className="area-text js-input"
-              type="text"
-              required
-            />
-            <label className="label" htmlFor="description">
-              Description
-            </label>
-          </div>
-          <div className="form-field col-lg-12">
-            <input
-              class="btn btn-primary btn-lg active"
               type="submit"
-              value="Submit"
+              value="Edit Product"
+              className="btn btn-primary"
             />
           </div>
         </form>
-      </section>
+      </div>
     )
   }
 }

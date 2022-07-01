@@ -9,6 +9,7 @@ import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 import Footer from "./components/footer/Footer.component";
 import 'mdb-ui-kit/css/mdb.min.css';
+import 'mdb-ui-kit/js/mdb.min.js'
 import { Provider } from "react-redux";
 import store from "./store";
 import { connect } from "react-redux";
