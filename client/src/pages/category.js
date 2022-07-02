@@ -34,9 +34,12 @@ class CardGrid extends Component {
     return (
       <div>
         
-        <Banner />
         
-        <div className="" style={{textAlign: "center"}}><h1 class="mb-1 hover-underline-animation" style={{marginTop:"2.5rem" }}>{this.props.params.category}</h1></div>
+        
+        <div className="" style={{textAlign: "center"}}><h1 class="mb-1 hover-underline-animation" style={{margin:"2rem",fontSize:"80px"}}>{this.props.params.category}</h1></div>
+        <div style={{margin:"2rem"}}>
+        <Banner />
+        </div>
         <div
           className="row row-cols-1 row-cols-md-4 g-4"
           style={{ paddingLeft: "130px",paddingRight: "100px" ,paddingTop: "40px",paddingBottom: "40px"}}

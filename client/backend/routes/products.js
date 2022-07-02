@@ -26,6 +26,12 @@ router.post('/add',upload.single("productImage"),(req, res) => {
   .catch(err => res.status(400).json('Error: ' + err));
 });
 
+router.route('/allproducts').get((req, res) => { 
+  category = req.params.category;
+  Product.find({})
+      .then(product => res.json(product))
+      .catch(err => res.status(400).json('Error: ' + err));
+})
 
 router.route('/category/:category').get((req, res) => { 
     category = req.params.category;
