@@ -9,3 +9,11 @@
       left: 0;
       min-height: 500px;
   }
+
+  .carousel-indicators button {
+    height: 20px !important;
+    width: 20px !important;
+    margin: 0 10px !important;
+    border-radius: 100%;
+    background-color: #0a4275 !important;
+}

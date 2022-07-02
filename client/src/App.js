@@ -24,7 +24,7 @@ import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
 import { setCurrentUser, logoutUser } from "./actions/authActions";
 import { Scrollbars } from 'react-custom-scrollbars';
-
+import Homie from "./pages/home"
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
   // Set auth token header auth
@@ -55,6 +55,7 @@ function App() {
         <Navbar />
         
         <Routes>
+          <Route path='/' element={<Homie/>}></Route>
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/dashboard" element={<Dashboard />} />

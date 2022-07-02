@@ -9,6 +9,7 @@ const Banner = () => {
       style={{height: '50%'}}
     >
       <div className="carousel-indicators">
+      {/* <i class=""></i> */}
         <button
           type="button"
           data-mdb-target="#carouselExampleCrossfade"
@@ -30,7 +31,7 @@ const Banner = () => {
           aria-label="Slide 3"
         />
       </div>
-      <div className="carousel-inner">
+      <div className="carousel-inner rounded-2 shadow-4-strong mx-0">
         <div className="carousel-item active">
           <img
             src="https://mdbcdn.b-cdn.net/img/new/slides/041.webp"
