@@ -2,9 +2,31 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 // import bootstrap from 'bootstrap';
 import SearchIcon from "@mui/icons-material/Search";
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import "./navbar.component.css"
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+
+import axios from "axios";
+import "./navbar.component.css";
 export default class Navbar extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      categorys: [],
+    };
+
+    // this.onChange = this.onChange.bind(this);
+  }
+
+  componentDidMount() {
+    axios
+      .get("/category")
+      .then((response) => {
+        this.setState({ categorys: response.data });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
   render() {
     return (
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -49,22 +71,13 @@ export default class Navbar extends Component {
                   Categories
                 </a>
                 <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <li>
-                    <a className="dropdown-item" href="#">
-                      Cat-1
-                    </a>
-                  </li>
-                  <li>
-                    <a className="dropdown-item" href="#">
-                      Cat-2
-                    </a>
-                  </li>
-                  {/* <li><hr className="dropdown-divider"></hr></li> */}
-                  <li>
-                    <a className="dropdown-item" href="#">
-                      Cat-3
-                    </a>
-                  </li>
+                  {this.state.categorys.map((cat) => (
+                    <li>
+                      <a className="dropdown-item" href= {`/products/category/${cat.category}`} >
+                        {cat.category}
+                      </a>
+                    </li>
+                  ))}
                 </ul>
               </li>
             </ul>
@@ -77,7 +90,7 @@ export default class Navbar extends Component {
                   placeholder="Search..."
                 />
                 <a href="#" class="search_icon">
-                <i class="fa fa-search"></i>
+                  <i class="fa fa-search"></i>
                 </a>
               </div>
             </form>
