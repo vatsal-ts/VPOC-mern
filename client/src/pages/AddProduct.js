@@ -43,22 +43,24 @@ class AddProduct extends Component {
   onSubmit = (e) => {
     e.preventDefault();
 
-    const product = {
-      title: this.state.title,
-      description: this.state.description,
-      price: this.state.price,
-      category: this.state.category,
-      sellerid: this.props.auth.user.id,
-      productImage: this.state.productImage,
-    };
+    const formData = new FormData()
+    formData.append('productImage', this.state.productImage)
+    formData.append("title",this.state.title)
+    formData.append("description",this.state.description)
+    formData.append("price",this.state.price)
+    formData.append("category",this.state.category)
+    formData.append("sellerid",this.props.auth.user.id)
+  
+    fetch('/products/add', {
+      method: 'POST',
+      body: formData,
+    }).then(res => {
+      console.log(res.data)
+    })
 
-    console.log(this.state.productImageUrl);
-
-    axios.post("/products/add", product).then((res) => console.log(res.data));
-
-    // window.location.href = "/dashboard";
+    window.location.href = "/dashboard";
   };
-
+  
   render() {
     return (
       <section className="get-in-touch" style={{ padding: "30px" }}>

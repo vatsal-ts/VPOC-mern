@@ -12,6 +12,7 @@ class EditProduct extends Component {
       price: 0,
       category: "",
       productImage: "",
+      productImageFilename: "",
       categorys: [],
     };
 
@@ -27,7 +28,8 @@ class EditProduct extends Component {
           description: response.data.description,
           price: response.data.price,
           category: response.data.category,
-          productImage: response.data.productImage,
+          // productImage: response.data.productImage,
+          productImageFilename: response.data.productImage,
         });
       })
       .catch((error) => {
@@ -52,22 +54,28 @@ class EditProduct extends Component {
     // this.setState({productImage: e.target.files[0]});
     this.setState({
       productImage: e.target.files[0],
-      productImageURL: URL.createObjectURL(e.target.files[0]),
+      productImageFilename : e.target.files[0].name
     });
   };
 
   onSubmit(e) {
     e.preventDefault();
 
-    const product = {
-      title: this.state.title,
-      description: this.state.description,
-      price: this.state.price,
-      category: this.state.category,
-      productImage: this.state.productImage,
-    };
+    const formData = new FormData()
+    formData.append('productImage', this.state.productImage)
+    formData.append("title",this.state.title)
+    formData.append("description",this.state.description)
+    formData.append("price",this.state.price)
+    formData.append("category",this.state.category)
+  
+    fetch('/products/update/' + this.props.params.id, {
+      method: 'POST',
+      body: formData,
+    }).then(res => {
+      console.log(res.data)
+    })
 
-    console.log(this.state.productImage);
+    console.log(formData);
 
     // axios
     //   .post("/products/update/" + this.props.params.id, product)
@@ -103,7 +111,7 @@ class EditProduct extends Component {
               onChange={this.handlePhoto}
             />
           </div>
-          <img src={this.state.productImageUrl}></img>
+          <img></img>
           <div className="form-field col-lg-12">
             <input
               type="text"
