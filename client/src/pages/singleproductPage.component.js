@@ -142,7 +142,8 @@ class SingleProduct extends Component {
                 </div>
                 <div className="image">
                   <img
-                    src="https://images-na.ssl-images-amazon.com/images/I/613A7vcgJ4L._SL1500_.jpg"
+                    src={`/file/${this.state.product.productImage}`}
+                    style={{height:'50%'}}
                     className="img-fluid"
                     alt=""
                   />

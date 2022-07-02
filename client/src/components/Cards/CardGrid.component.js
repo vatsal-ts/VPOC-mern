@@ -8,7 +8,7 @@ const CardComponent = ({product}) => {
     <div className="col">
       <div className="card h-100">
         <img
-          src="https://mdbcdn.b-cdn.net/img/new/standard/city/044.webp"
+          src={`/file/${product.productImage}`}
           className="card-img-top"
           alt="Skyscrapers"
         />

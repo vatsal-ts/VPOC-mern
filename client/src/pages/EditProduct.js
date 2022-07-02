@@ -12,7 +12,7 @@ class EditProduct extends Component {
       price: 0,
       category: "",
       productImage: "",
-      productImageFilename: "",
+      // productImageFilename: "",
       categorys: [],
     };
 
@@ -28,8 +28,8 @@ class EditProduct extends Component {
           description: response.data.description,
           price: response.data.price,
           category: response.data.category,
-          // productImage: response.data.productImage,
-          productImageFilename: response.data.productImage,
+          productImage: response.data.productImage,
+          // productImageFilename: response.data.productImage,
         });
       })
       .catch((error) => {
@@ -54,26 +54,26 @@ class EditProduct extends Component {
     // this.setState({productImage: e.target.files[0]});
     this.setState({
       productImage: e.target.files[0],
-      productImageFilename : e.target.files[0].name
+      productImageFilename: URL.createObjectURL(e.target.files[0]),
     });
   };
 
   onSubmit(e) {
     e.preventDefault();
 
-    const formData = new FormData()
-    formData.append('productImage', this.state.productImage)
-    formData.append("title",this.state.title)
-    formData.append("description",this.state.description)
-    formData.append("price",this.state.price)
-    formData.append("category",this.state.category)
-  
-    fetch('/products/update/' + this.props.params.id, {
-      method: 'POST',
+    const formData = new FormData();
+    formData.append("productImage", this.state.productImage);
+    formData.append("title", this.state.title);
+    formData.append("description", this.state.description);
+    formData.append("price", this.state.price);
+    formData.append("category", this.state.category);
+
+    fetch("/products/update/" + this.props.params.id, {
+      method: "POST",
       body: formData,
-    }).then(res => {
-      console.log(res.data)
-    })
+    }).then((res) => {
+      console.log(res.data);
+    });
 
     console.log(formData);
 
@@ -81,12 +81,12 @@ class EditProduct extends Component {
     //   .post("/products/update/" + this.props.params.id, product)
     //   .then((res) => console.log(res.data));
 
-    // window.location.href = "/products/product/" + this.props.params.id;
+    window.location.href = "/products/product/" + this.props.params.id;
   }
 
   render() {
     return (
-      <section className="get-in-touch" style={{padding:"30px"}}>
+      <section className="get-in-touch" style={{ padding: "30px" }}>
         <h1 className="title">
           Edit{" "}
           <span style={{ color: "grey", fontWeight: "100" }}>
@@ -103,15 +103,23 @@ class EditProduct extends Component {
             <label htmlFor="productImage">Photos</label>
             <input
               type="file"
-              required
-              accept=".png, .jpg, .jpeg"
+              accept=".png, .jpg, .jpeg .jfif"
               name="productImage"
               id="productImage"
               className="form-control"
               onChange={this.handlePhoto}
             />
           </div>
-          <img></img>
+          <div className="form-field col-lg-3">
+            <img
+              style={{maxHeight:"200px"}}
+              src={
+                this.state.productImageFilename
+                  ? this.state.productImageFilename
+                  : `/file/${this.state.productImage}`
+              }
+            ></img>
+          </div>
           <div className="form-field col-lg-12">
             <input
               type="text"

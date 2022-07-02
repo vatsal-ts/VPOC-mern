@@ -14,7 +14,7 @@ class AddProduct extends Component {
       category: "",
       productImage: "",
       categorys: [],
-      productImageUrl: "",
+      productImageFilename: "",
     };
 
     this.onChange = this.onChange.bind(this);
@@ -37,30 +37,32 @@ class AddProduct extends Component {
 
   handlePhoto = (e) => {
     this.setState({ productImage: e.target.files[0] });
-    this.setState({ productImageURL: URL.createObjectURL(e.target.files[0]) });
+    this.setState({
+      productImageFilename: URL.createObjectURL(e.target.files[0]),
+    });
   };
 
   onSubmit = (e) => {
     e.preventDefault();
 
-    const formData = new FormData()
-    formData.append('productImage', this.state.productImage)
-    formData.append("title",this.state.title)
-    formData.append("description",this.state.description)
-    formData.append("price",this.state.price)
-    formData.append("category",this.state.category)
-    formData.append("sellerid",this.props.auth.user.id)
-  
-    fetch('/products/add', {
-      method: 'POST',
+    const formData = new FormData();
+    formData.append("productImage", this.state.productImage);
+    formData.append("title", this.state.title);
+    formData.append("description", this.state.description);
+    formData.append("price", this.state.price);
+    formData.append("category", this.state.category);
+    formData.append("sellerid", this.props.auth.user.id);
+
+    fetch("/products/add", {
+      method: "POST",
       body: formData,
-    }).then(res => {
-      console.log(res.data)
-    })
+    }).then((res) => {
+      console.log(res.data);
+    });
 
     window.location.href = "/dashboard";
   };
-  
+
   render() {
     return (
       <section className="get-in-touch" style={{ padding: "30px" }}>
@@ -73,9 +75,6 @@ class AddProduct extends Component {
           onSubmit={this.onSubmit}
           enctype="multipart/form-data"
         >
-          <div className="form-field col-lg-12 mx-auto" >
-            <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/14.jpg" class="img-fluid"></img>
-          </div>
           <div className="form-field col-lg-12">
             <label htmlFor="productImage">Photos</label>
             <input
@@ -87,8 +86,13 @@ class AddProduct extends Component {
               className="form-control"
               onChange={this.handlePhoto}
             />
-            {/* <img src={this.state.productImageUrl}></img>
-             */}
+
+            <div className="form-field col-lg-3">
+              <img
+                src={this.state.productImageFilename}
+                class="img-fluid"
+              ></img>
+            </div>
           </div>
           <div className="form-field col-lg-12">
             <input

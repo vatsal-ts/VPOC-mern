@@ -12,7 +12,7 @@ const CardComponent = ({ product }) => {
               <div className="col-md-12 col-lg-3 col-xl-3 mb-4 mb-lg-0">
                 <div className="bg-image hover-zoom ripple rounded ripple-surface">
                   <img
-                    src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/img%20(4).webp"
+                    src={`/file/${product.productImage}`}
                     className="w-100"
                   />
                   <a href="#!">

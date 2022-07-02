@@ -46,29 +46,33 @@ class EditUserInfo extends Component {
   };
 
   handlePhoto = (e) => {
-    this.setState({ profileImage: e.target.files[0] });
+    this.setState({
+      profileImage: e.target.files[0],
+      profileImageFilename: URL.createObjectURL(e.target.files[0]),
+    });
   };
 
   onSubmit = (e) => {
     e.preventDefault();
 
-    const userData = {
-      name: this.state.name,
-      username: this.state.username,
-      email: this.state.email,
-      phone: this.state.phone,
-      address: this.state.address,
-      profileImage: this.state.profileImage,
-      bio: this.state.bio,
-    };
+    const formData = new FormData();
+    formData.append("name", this.state.name);
+    formData.append("username", this.state.username);
+    formData.append("email", this.state.email);
+    formData.append("phone", this.state.phone);
+    formData.append("address", this.state.address);
+    formData.append("profileImage", this.state.profileImage);
+    formData.append("bio", this.state.bio);
 
-    console.log(userData);
+    fetch(`/update/${this.props.auth.user.id}`, {
+      method: "POST",
+      body: formData,
+    }).then((res) => {
+      console.log(res.data);
+    });
 
-    axios
-      .post(`/update/${this.props.auth.user.id}`, userData)
-      .then((res) => console.log(res.data));
-
-    window.location.href = "/dashboard";
+    console.log(formData);
+    // window.location.href = "/dashboard";
   };
 
   render() {
@@ -83,10 +87,14 @@ class EditUserInfo extends Component {
           onSubmit={this.onSubmit}
           enctype="multipart/form-data"
         >
-          <div className="form-field col-lg-12 mx-auto">
+          <div className="form-field col-lg-3">
             <img
-              src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/14.jpg"
-              class="img-fluid"
+              style={{ maxHeight: "200px" }}
+              src={
+                this.state.profileImageFilename
+                  ? this.state.profileImageFilename
+                  : `/file/${this.state.profileImage}`
+              }
             ></img>
           </div>
           <div className="form-field col-lg-12">
@@ -131,7 +139,7 @@ class EditUserInfo extends Component {
           </div>
 
           <div className="form-field col-lg-4">
-          <input
+            <input
               className="input-text js-input"
               type="text"
               required
@@ -145,7 +153,7 @@ class EditUserInfo extends Component {
           </div>
 
           <div className="form-field col-lg-6 ">
-          <input
+            <input
               className="input-text js-input"
               type="text"
               required

@@ -83,9 +83,9 @@ class Dashboard extends Component {
     console.log(this.state.toBeSold);
   }
 
-  myList(items) {
+  myList(items,onSale) {
     return items.map((item) => {
-      return <Listers item={item} onclick={this.onDelete(item._id)} />;
+      return <Listers item={item} onclick={this.onDelete(item._id)} onSale={onSale}/>;
     });
   }
 
@@ -108,7 +108,7 @@ class Dashboard extends Component {
               <div className="card mb-4">
                 <div className="card-body text-center">
                   <img
-                    src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
+                    src={`/file/${this.state.profileImage}`}
                     alt="avatar"
                     className="rounded-circle img-fluid"
                     style={{ width: "150px" }}
@@ -225,7 +225,7 @@ class Dashboard extends Component {
                       </p>
                       <div style={{ maxHeight: "400px", overflow: "scroll" }}>
                         <ul className="list-group list-group-light">
-                          {this.myList(this.state.toBeSold)}
+                          {this.myList(this.state.toBeSold,true)}
                         </ul>
                       </div>
                     </div>

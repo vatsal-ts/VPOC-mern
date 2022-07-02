@@ -10,7 +10,7 @@ const storage = new GridFsStorage({
           if (err) {
             return reject(err)
           }
-          const filename = file.originalname
+          const filename = Date.now()+'--'+file.originalname
           const fileInfo = {
             filename: filename,
             bucketName: 'uploads',

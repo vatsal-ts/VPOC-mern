@@ -6,6 +6,8 @@ let User = require("../models/users.model");
 const keys = require("../config/keys");
 const validateRegisterInput = require("../validation/register");
 const validateLoginInput = require("../validation/login");
+const upload = require("../middleware/upload");
+
 
 router.route("/register").post((req, res) => {
   // Form validation
@@ -125,7 +127,7 @@ router.route("/user/:id").get((req, res) => {
 //     .catch((err) => res.status(400).json("Error: " + err));
 // });
 
-router.route("/update/:id").post((req, res) => {
+router.route("/update/:id").post(upload.single("profileImage"),(req, res) => {
   id = req.params.id;
   User.findById(id)
     .then((user) => {
@@ -134,7 +136,8 @@ router.route("/update/:id").post((req, res) => {
       user.email = req.body.email;
       user.phone = req.body.phone;
       user.address = req.body.address;
-      user.bio = req.body.bio
+      user.bio = req.body.bio;
+      user.profileImage=req.file.filename
       // user.profileImage = req.body.profileImage;
       // user.image = "default_url" (to update default url)
 
