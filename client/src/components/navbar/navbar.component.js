@@ -163,8 +163,9 @@ class Navbar extends Component {
         {this.state.searchList.length === 0 ? (
           ""
         ) : (
-          <nav className="navbar navbar-expand-md bg-light navbar-dark">
-            <div className="navbar-collapse collapse pt-2 pt-md-0" id="navbar2">
+          < nav class="navbar navbar-expand-md fixed-top-sm justify-content-start flex-nowrap bg-light navbar-dark">
+         
+            <div className="navbar-collapse collapse pt-2 pt-md-0" id="navbarSupportedContent">
               <ul class="list-group-small list-group-flush list-group-light list-group-small">
                 {this.state.searchList.map((product) => (
                   <li class="list-group-item bg-transparent">
