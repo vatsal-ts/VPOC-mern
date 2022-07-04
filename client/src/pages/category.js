@@ -37,7 +37,7 @@ class CardGrid extends Component {
         
         
         <div className="" style={{textAlign: "center"}}><h1 class="mb-1 hover-underline-animation" style={{margin:"2rem",fontSize:"80px"}}>{this.props.params.category}</h1></div>
-        <div style={{margin:"2rem"}}>
+        <div style={{margin:"0rem"}}>
         <Banner />
         </div>
         <div

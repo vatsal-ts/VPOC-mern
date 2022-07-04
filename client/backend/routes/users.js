@@ -8,7 +8,6 @@ const validateRegisterInput = require("../validation/register");
 const validateLoginInput = require("../validation/login");
 const upload = require("../middleware/upload");
 
-
 router.route("/register").post((req, res) => {
   // Form validation
   const { errors, isValid } = validateRegisterInput(req.body);
@@ -41,6 +40,24 @@ router.route("/register").post((req, res) => {
       });
     }
   });
+});
+
+router.route("/wishlist/:id").post((req, res) => {
+  id = req.params.id;
+  User.findById(id)
+    .then((user) => {
+      if (!user.wishList.includes(id)) {
+        user.wishList.push(req.body.product_id);
+        user
+          .save()
+          .then(() => res.json("User updated!"))
+          .catch((err) => res.status(400).json("Error: " + err));
+      }
+      else{
+        console.log("Already in wishlist")
+      }
+    })
+    .catch((err) => res.status(400).json("Error: " + err));
 });
 
 router.route("/login").post((req, res) => {
@@ -127,17 +144,17 @@ router.route("/user/:id").get((req, res) => {
 //     .catch((err) => res.status(400).json("Error: " + err));
 // });
 
-router.route("/update/:id").post(upload.single("profileImage"),(req, res) => {
+router.route("/update/:id").post(upload.single("profileImage"), (req, res) => {
   id = req.params.id;
   User.findById(id)
     .then((user) => {
       user.username = req.body.username;
-      user.name = req.body.name
+      user.name = req.body.name;
       user.email = req.body.email;
       user.phone = req.body.phone;
       user.address = req.body.address;
       user.bio = req.body.bio;
-      user.profileImage=req.file.filename
+      user.profileImage = req.file.filename;
       // user.profileImage = req.body.profileImage;
       // user.image = "default_url" (to update default url)
 

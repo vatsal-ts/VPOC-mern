@@ -12,6 +12,7 @@ class SingleProduct extends Component {
     console.dir(props);
 
     this.state = { product: {}, seller: {}, similarProducts: [] };
+    this.onClick = this.onClick.bind(this);
   }
 
   async componentDidMount() {
@@ -59,43 +60,62 @@ class SingleProduct extends Component {
 
   productList(productlist) {
     return productlist.map((currentProduct) => {
-      return !currentProduct.buyerid ? (
-        <AlternateCardComponent product={currentProduct} />
+      return ((!currentProduct.buyerid)&&(currentProduct._id!==this.state.product._id)) ? (
+        <AlternateCardComponent product={currentProduct} enableWishlist={currentProduct.sellerid!==this.props.auth.user.id}/>
       ) : (
         ""
       );
     });
   }
 
+  onClick() {
+    const product = {
+      product_id: this.state.product._id,
+    };
+    axios
+      .post("/wishlist/" + this.props.auth.user.id, product)
+      .then((res) => console.log(res));
+
+    window.location.href = "/wishlist";
+  }
+
   render() {
     const { user } = this.props.auth;
     const button1 = () => {
-      if (user.id !== this.state.seller._id) {
-        return <button type="button">Buy Now</button>;
+      if (!this.state.product.buyerid) {
+        if (user.id !== this.state.seller._id) {
+          return <button type="button">Buy Now</button>;
+        } else {
+          return (
+            <Link to={`/products/update/${this.state.product._id}`}>
+              <button type="button" class="btn btn-outline-warning">
+                Edit
+              </button>
+            </Link>
+          );
+        }
       } else {
-        return (
-          <Link to={`/products/update/${this.state.product._id}`}>
-            <button type="button" class="btn btn-outline-warning">
-              Edit
-            </button>
-          </Link>
-        );
+        return "";
       }
     };
 
     const button2 = () => {
-      if (user.id !== this.state.seller._id) {
-        return (
-          <button type="button" onClick={this.onClick}>
-            Add to Cart
-          </button>
-        );
+      if (!this.state.product.buyerid) {
+        if (user.id !== this.state.seller._id) {
+          return (
+            <button type="button" onClick={this.onClick}>
+              Add to Wishlist
+            </button>
+          );
+        } else {
+          return (
+            <button type="button" class="btn btn-outline-danger">
+              Delete
+            </button>
+          );
+        }
       } else {
-        return (
-          <button type="button" class="btn btn-outline-danger">
-            Delete
-          </button>
-        );
+        return "";
       }
     };
     return (
@@ -186,7 +206,15 @@ class SingleProduct extends Component {
                   <p>{this.state.product.description}</p>
                 </div>
                 <span className="stock">
-                  <i className="fa fa-shopping-cart" /> In stock
+                  {this.state.product.buyerid ? (
+                    <div>
+                      <h3 style={{color:"red"}}><i class="fa fa-flag" aria-hidden="true" style={{color:"red"}}></i> Sold</h3>
+                    </div>
+                  ) : (
+                    <div>
+                      <h3 ><i class="fa fa-shopping-cart" aria-hidden="true"></i> In stock</h3>
+                    </div>
+                  )}
                 </span>
                 <br></br>
                 <br></br>
@@ -212,12 +240,8 @@ class SingleProduct extends Component {
                 <h3>{this.state.seller.username}</h3>
                 <h3>+91-{this.state.seller.phone}</h3>
               </div>
-              <div className="action mx-1">
-                {button1()}
-              </div>
-              <div className="action mx-1">
-              {button2()}
-              </div>
+              <div className="action mx-1">{button1()}</div>
+              <div className="action mx-1">{button2()}</div>
             </div>
           </div>
 
@@ -257,4 +281,6 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
 });
 
-export default connect(mapStateToProps)((props) => <SingleProduct {...props} params={useParams()} />);
+export default connect(mapStateToProps)((props) => (
+  <SingleProduct {...props} params={useParams()} />
+));

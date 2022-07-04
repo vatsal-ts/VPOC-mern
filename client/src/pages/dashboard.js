@@ -98,7 +98,7 @@ class Dashboard extends Component {
 
     this.props.logoutUser();
   };
-
+  
   render() {
     return (
       <section style={{ backgroundColor: "#eee" }}>

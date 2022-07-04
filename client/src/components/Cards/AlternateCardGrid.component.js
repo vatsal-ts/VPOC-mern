@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-const CardComponent = ({ product }) => {
+const CardComponent = ({ product,enableWishlist}) => {
   return (
     
       <div className="col-md-6 col-xl-6 mb-3">
@@ -77,12 +77,7 @@ const CardComponent = ({ product }) => {
                       Details
                     </button>
                   {/* </Link> */}
-                  <button
-                    className="btn btn-outline-primary btn-sm mt-2"
-                    type="button"
-                  >
-                    Add to wishlist
-                  </button>
+                  
                 </div>
               </div>
             </div>

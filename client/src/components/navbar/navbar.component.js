@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 // import bootstrap from 'bootstrap';
 import SearchIcon from "@mui/icons-material/Search";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import SpecList from "./SpecList";
@@ -71,19 +72,31 @@ class Navbar extends Component {
           <div className="container-fluid">
             {/* insert profile pic for navigating to users profile page */}
             {this.state.profileImage ? (
-              <Link
-                to="/dashboard"
-                style={{
-                  textDecoration: "none !important",
-                  color: "none !important",
-                }}
-              >
-                <i class="fa fa-user-circle-o">
-                  <AccountCircleIcon />
-                </i>
-              </Link>
+              <div>
+                <Link
+                  to="/dashboard"
+                  style={{
+                    textDecoration: "none !important",
+                    color: "none !important",
+                  }}
+                >
+                  {/* <i class="fa fa-user-circle-o"> */}
+                    <AccountCircleIcon />
+                  
+                </Link>
+
+
+              </div>
             ) : (
-              ""
+              <Link to="/register">
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  data-mdb-ripple-color="dark"
+                >
+                  Register/Login
+                </button>
+              </Link>
             )}
             <h5 style={{ margin: "0.5rem" }}>
               <a href="/">VPOC</a>
@@ -125,6 +138,8 @@ class Navbar extends Component {
                   >
                     Categories
                   </a>
+                  
+
                   <ul
                     className="dropdown-menu"
                     aria-labelledby="navbarDropdown"
@@ -141,9 +156,29 @@ class Navbar extends Component {
                     ))}
                   </ul>
                 </li>
+
+                {this.state.profileImage ? (
+                      <li className="nav-item">
+                        <a className="nav-link" href="/wishlist">
+                          Wishlist
+                          <FavoriteBorderIcon />
+                        </a>
+                      </li>
+                  ) : (
+                    ""
+                  )}
+                {this.state.profileImage ? (
+                      <li className="nav-item">
+                      <a className="nav-link" href="/products/add">
+                        Add Product
+                      </a>
+                    </li>
+                  ) : (
+                    ""
+                  )}
               </ul>
               <form className="d-flex">
-                <div class="searchbar">
+                <div className="searchbar">
                   <input
                     class="search_input"
                     type="text"
@@ -155,6 +190,7 @@ class Navbar extends Component {
                     <i class="fa fa-search"></i>
                   </a>
                 </div>
+                
                 {/* <SpecList input={this.state.inputText} /> */}
               </form>
             </div>
@@ -163,10 +199,12 @@ class Navbar extends Component {
         {this.state.searchList.length === 0 ? (
           ""
         ) : (
-          < nav class="navbar navbar-expand-md fixed-top-sm justify-content-start flex-nowrap bg-light navbar-dark">
-         
-            <div className="navbar-collapse collapse pt-2 pt-md-0" id="navbarSupportedContent">
-              <ul class="list-group-small list-group-flush list-group-light list-group-small">
+          <nav class="navbar navbar-expand-md fixed-top-sm justify-content-end flex-nowrap bg-light navbar-dark">
+            <div
+              className="navbar-collapse collapse pt-2 pt-md-0 "
+              id="navbarSupportedContent"
+            >
+              <ul class="list-group-small list-group-flush list-group-light list-group-small ">
                 {this.state.searchList.map((product) => (
                   <li class="list-group-item bg-transparent">
                     <a className="" href={`/products/product/${product._id}`}>

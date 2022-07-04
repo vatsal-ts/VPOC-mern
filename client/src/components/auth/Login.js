@@ -113,9 +113,9 @@ class Login extends Component {
                               onChange={this.onChange}
                               value={this.state.password}
                               error={errors.password}
-                              // className={classnames("", {
+                              // className={`${classnames("", {
                               //   invalid: errors.password || errors.passwordincorrect
-                              // })}
+                              // })}  form-control`}
                             />
                             <label
                               className="form-label"

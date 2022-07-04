@@ -79,8 +79,8 @@ class EditUserInfo extends Component {
     return (
       <section className="get-in-touch" style={{ padding: "30px" }}>
         <h1 className="title">
-          Sell
-          <span style={{ color: "grey", fontWeight: "100" }}> a product</span>
+          Edit
+          <span style={{ color: "grey", fontWeight: "100" }}>Profile</span>
         </h1>
         <form
           className="contact-form row"
@@ -114,7 +114,6 @@ class EditUserInfo extends Component {
             <input
               className="input-text js-input"
               type="text"
-              required
               id="name"
               value={this.state.name}
               onChange={this.onChange}
@@ -142,7 +141,6 @@ class EditUserInfo extends Component {
             <input
               className="input-text js-input"
               type="text"
-              required
               id="phone"
               value={this.state.phone}
               onChange={this.onChange}
@@ -193,7 +191,6 @@ class EditUserInfo extends Component {
               //   style={{ height: "60px" }}
               className="area-text js-input"
               type="text"
-              required
               id="bio"
               value={this.state.bio}
               onChange={this.onChange}
@@ -208,7 +205,6 @@ class EditUserInfo extends Component {
               //   style={{ height: "60px" }}
               className="area-text js-input"
               type="text"
-              required
               id="address"
               value={this.state.address}
               onChange={this.onChange}

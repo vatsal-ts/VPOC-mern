@@ -55,7 +55,10 @@ const userSchema = new Schema({
     bio : {
         type : String,
         deafult:"Hey! I am enjoying VPOC!"
-    }
+    },
+    wishList : [{
+        type : String,
+    }]
 }, {
     timestamps: true,
 });

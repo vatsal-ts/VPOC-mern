@@ -19,12 +19,13 @@ import Dashboard from "./pages/dashboard"
 import AddProduct from "./pages/AddProduct"
 import EditProduct from "./pages/EditProduct"
 import EditUserInfo from "./pages/EditUserInfo"
-import PrivateRoute from "./components/private-route/PrivateRoute";
+// import PrivateRoute from "./components/private-route/PrivateRoute";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
 import { setCurrentUser, logoutUser } from "./actions/authActions";
 import { Scrollbars } from 'react-custom-scrollbars';
 import Homie from "./pages/home"
+import WishList from "./pages/wishList"
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
   // Set auth token header auth
@@ -58,13 +59,14 @@ function App() {
           <Route path='/' element={<Homie/>}></Route>
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          {/* <switch><PrivateRoute exact path="/dashboard"  element={<Dashboard/>} /></switch> */}
+          <Route path="/dashboard" element={!localStorage.jwtToken?<Login />:<Dashboard />} />
+          <Route path="/wishlist" element={!localStorage.jwtToken?<Login />:<WishList />} />
+          {/* <PrivateRoute path="/dashboard"  element={<Dashboard/>} /> */}
           <Route path="/products/category/:category" element={<CardGrid/>} />
-          <Route path="/products/add/" element={<AddProduct/>} />
+          <Route path="/products/add/" element={!localStorage.jwtToken?<Login />:<AddProduct/>} />
           <Route path="/products/product/:id" element={<SingleProduct />} />
-          <Route path="/products/update/:id" element={<EditProduct />} />
-          <Route path="/user/edit/" element={<EditUserInfo />} />
+          <Route path="/products/update/:id" element={!localStorage.jwtToken?<Login />:<EditProduct />} />
+          <Route path="/user/edit/" element={!localStorage.jwtToken?<Login />:<EditUserInfo />} />
         </Routes>
         
         <Footer />
