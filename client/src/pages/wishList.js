@@ -73,16 +73,8 @@ class WishList extends Component {
     return this.state.products.map((currentProduct) => {
       return (
         <>
-          <CardComponent product={currentProduct} />
-          <li className="d-flex align-items-center">
-            <button
-              type="button"
-              className="btn btn-outline-danger ms-1"
-              onClick={this.onclick(currentProduct._id)}
-            >
-              Delete
-            </button>
-          </li>
+          <CardComponent product={currentProduct} wishListEnable={true}/>
+          
         </>
       );
     });
@@ -90,7 +82,10 @@ class WishList extends Component {
 
   render() {
     return (
+        
       <div>
+        <div className="" style={{textAlign: "center"}}><h1 class="mb-1 hover-underline-animation" style={{margin:"2rem",fontSize:"80px"}}>Wish List <i class="fa fa-heart" style={{color:"red"}}></i></h1></div>
+        
         <div
           className="row row-cols-1 row-cols-md-4 g-4"
           style={{
@@ -100,6 +95,7 @@ class WishList extends Component {
             paddingBottom: "40px",
           }}
         >
+            
           {this.productList()}
         </div>
       </div>

@@ -2,8 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-
-const CardComponent = ({product}) => {
+const CardComponent = ({ product ,wishListEnable}) => {
   return (
     <div className="col">
       <div className="card h-100">
@@ -19,16 +18,41 @@ const CardComponent = ({product}) => {
         <div className="card-footer">
           <small className="text-muted">{product.description}</small>
         </div>
-        <div style={{textAlign:"center"}}>
-        <Link to={`/products/product/${product._id}`}className="btn-flat waves-effect">
-        <button type="button" className="btn btn-link btn-block" style={{padding: "15px",textAlign:"center"}}>
-          View details
-        </button>
-        </Link>
+        <div style={{ textAlign: "center" }}>
+          <Link
+            to={`/products/product/${product._id}`}
+            className="btn-flat waves-effect"
+          >
+            <button
+              type="button"
+              className="btn btn-link btn-block"
+              style={{ padding: "15px", textAlign: "center" }}
+            >
+              View details
+            </button>
+          </Link>
         </div>
+        {wishListEnable ? (
+          <div style={{ textAlign: "center" }}>
+            <Link
+              to={`/products/product/${product._id}`}
+              className="btn-flat waves-effect"
+            >
+              <button
+                type="button"
+                className="btn btn-link btn-block"
+                style={{ padding: "15px", textAlign: "center",color:"red" }}
+              >
+                Remove from wishlist
+              </button>
+            </Link>
+          </div>
+        ) : (
+          ""
+        )}
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default CardComponent;
