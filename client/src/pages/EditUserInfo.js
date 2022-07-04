@@ -72,7 +72,7 @@ class EditUserInfo extends Component {
     });
 
     console.log(formData);
-    // window.location.href = "/dashboard";
+    window.location.href = "/dashboard";
   };
 
   render() {

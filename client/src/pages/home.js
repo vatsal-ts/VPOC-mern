@@ -1,7 +1,7 @@
 // import React from 'react'
-import Banner from '../components/Banner/banner'
+import Banner from "../components/Banner/banner";
 import React, { Component } from "react";
-import RiggedCard from "../components/Cards/RiggedCard/rigged_card"
+import RiggedCard from "../components/Cards/RiggedCard/rigged_card";
 // import { Link } from "react-router-dom";
 // // import bootstrap from 'bootstrap';
 // import SearchIcon from "@mui/icons-material/Search";
@@ -48,55 +48,67 @@ export default class Homie extends Component {
     return (
       <div>
         {/*Carousel Wrapper*/}
-        <Banner/>
+        <Banner />
         {/*/.Carousel Wrapper*/}
-        {this.productList()}
+        <div className="" style={{ textAlign: "center" }}>
+          <h1
+            class="mb-1 hover-underline-animation"
+            style={{ margin: "2rem", fontSize: "80px" }}
+          >
+            Categories
+          </h1>
+        </div>
+        <div className="container">
+          <div className="row g-1 p-0 mt-3 mb-2">{this.productList()}</div>
+        </div>
         {/*Main layout*/}
         <main>
           <div className="container">
-
-
-            
-          
-        
-        
-
-
-
-
-
-
-
-
-
             <section className="mt-5 wow fadeIn">
               {/*Grid row*/}
               <div className="row">
                 {/*Grid column*/}
                 <div className="col-md-6 mb-4">
-                  <img src="https://mdbootstrap.com/img/Marketing/mdb-press-pack/mdb-main.jpg" className="img-fluid z-depth-1-half" alt="" />
+                  <img
+                    src="https://mdbootstrap.com/img/Marketing/mdb-press-pack/mdb-main.jpg"
+                    className="img-fluid z-depth-1-half"
+                    alt=""
+                  />
                 </div>
                 {/*Grid column*/}
                 {/*Grid column*/}
                 <div className="col-md-6 mb-4">
                   {/* Main heading */}
                   <h3 className="h3 mb-3">Material Design for Bootstrap</h3>
-                  <p>This template is created with Material Design for Bootstrap (
-                    <strong>MDB</strong> ) framework.</p>
+                  <p>
+                    This template is created with Material Design for Bootstrap
+                    (<strong>MDB</strong> ) framework.
+                  </p>
                   <p>Read details below to learn more about MDB.</p>
                   {/* Main heading */}
                   <hr />
                   <p>
                     <strong>400+</strong> material UI elements,
                     <strong>600+</strong> material icons,
-                    <strong>74</strong> CSS animations, SASS files, templates, tutorials and many more.
+                    <strong>74</strong> CSS animations, SASS files, templates,
+                    tutorials and many more.
                     <strong>Free for personal and commercial use.</strong>
                   </p>
                   {/* CTA */}
-                  <a target="_blank" href="https://mdbootstrap.com/getting-started/" className="btn btn-indigo btn-md">Download
+                  <a
+                    target="_blank"
+                    href="https://mdbootstrap.com/getting-started/"
+                    className="btn btn-indigo btn-md"
+                  >
+                    Download
                     <i className="fas fa-download ml-1" />
                   </a>
-                  <a target="_blank" href="https://mdbootstrap.com/components/" className="btn btn-indigo btn-md">Live demo
+                  <a
+                    target="_blank"
+                    href="https://mdbootstrap.com/components/"
+                    className="btn btn-indigo btn-md"
+                  >
+                    Live demo
                     <i className="fas fa-image ml-1" />
                   </a>
                 </div>
@@ -104,28 +116,8 @@ export default class Homie extends Component {
               </div>
               {/*Grid row*/}
             </section>
-            
-
-
-
-
-
-
-
-
-
 
             <hr className="my-5" />
-            
-
-
-
-
-
-
-
-
-
 
             <section>
               <h3 className="h3 text-center mb-5">About MDB</h3>
@@ -140,11 +132,14 @@ export default class Homie extends Component {
                     </div>
                     <div className="col-10">
                       <h5 className="feature-title">Bootstrap 4</h5>
-                      <p className="grey-text">Thanks to MDB you can take advantage of all feature of newest Bootstrap 4.</p>
+                      <p className="grey-text">
+                        Thanks to MDB you can take advantage of all feature of
+                        newest Bootstrap 4.
+                      </p>
                     </div>
                   </div>
                   {/*/First row*/}
-                  <div style={{height: '30px'}} />
+                  <div style={{ height: "30px" }} />
                   {/*Second row*/}
                   <div className="row">
                     <div className="col-1 mr-3">
@@ -152,14 +147,15 @@ export default class Homie extends Component {
                     </div>
                     <div className="col-10">
                       <h5 className="feature-title">Detailed documentation</h5>
-                      <p className="grey-text">We give you detailed user-friendly documentation at your disposal. It will help you
-                        to implement your ideas
+                      <p className="grey-text">
+                        We give you detailed user-friendly documentation at your
+                        disposal. It will help you to implement your ideas
                         easily.
                       </p>
                     </div>
                   </div>
                   {/*/Second row*/}
-                  <div style={{height: '30px'}} />
+                  <div style={{ height: "30px" }} />
                   {/*Third row*/}
                   <div className="row">
                     <div className="col-1 mr-3">
@@ -167,9 +163,11 @@ export default class Homie extends Component {
                     </div>
                     <div className="col-10">
                       <h5 className="feature-title">Lots of tutorials</h5>
-                      <p className="grey-text">We care about the development of our users. We have prepared numerous tutorials,
-                        which allow you to learn
-                        how to use MDB as well as other technologies.</p>
+                      <p className="grey-text">
+                        We care about the development of our users. We have
+                        prepared numerous tutorials, which allow you to learn
+                        how to use MDB as well as other technologies.
+                      </p>
                     </div>
                   </div>
                   {/*/Third row*/}
@@ -177,56 +175,26 @@ export default class Homie extends Component {
                 {/*/Grid column*/}
                 {/*Grid column*/}
                 <div className="col-lg-6 col-md-12">
-                  <p className="h5 text-center mb-4">Watch our "5 min Quick Start" tutorial</p>
+                  <p className="h5 text-center mb-4">
+                    Watch our "5 min Quick Start" tutorial
+                  </p>
                   <div className="embed-responsive embed-responsive-16by9">
-                    <iframe className="embed-responsive-item" src="https://www.youtube.com/embed/cXTThxoywNQ" allowFullScreen />
+                    <iframe
+                      className="embed-responsive-item"
+                      src="https://www.youtube.com/embed/cXTThxoywNQ"
+                      allowFullScreen
+                    />
                   </div>
                 </div>
                 {/*/Grid column*/}
               </div>
               {/*/Grid row*/}
             </section>
-            
-
-
-
-
-
-
-
-
-
-
-            
-            
-
-
-
-
-
-
-
-
-
 
             <hr className="mb-5" />
-            
-
-
-
-
-
-          
-            
-
-
-
-
-
           </div>
         </main>
         {/*Main layout*/}
-
       </div>
     );
   }

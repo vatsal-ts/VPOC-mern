@@ -4,6 +4,8 @@ import AdditionalInfo from "./AdditionalInfo";
 import axios from "axios";
 import AlternateCardComponent from "../components/Cards/AlternateCardGrid.component";
 import "../components/Cards/cardoo.css";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 class SingleProduct extends Component {
   constructor(props) {
     super(props);
@@ -66,6 +68,36 @@ class SingleProduct extends Component {
   }
 
   render() {
+    const { user } = this.props.auth;
+    const button1 = () => {
+      if (user.id !== this.state.seller._id) {
+        return <button type="button">Buy Now</button>;
+      } else {
+        return (
+          <Link to={`/products/update/${this.state.product._id}`}>
+            <button type="button" class="btn btn-outline-warning">
+              Edit
+            </button>
+          </Link>
+        );
+      }
+    };
+
+    const button2 = () => {
+      if (user.id !== this.state.seller._id) {
+        return (
+          <button type="button" onClick={this.onClick}>
+            Add to Cart
+          </button>
+        );
+      } else {
+        return (
+          <button type="button" class="btn btn-outline-danger">
+            Delete
+          </button>
+        );
+      }
+    };
     return (
       <main className="pt-4 mx-10" style={{ marginTop: "-3%" }}>
         <div className="container dark-grey-text mt-5">
@@ -137,13 +169,13 @@ class SingleProduct extends Component {
                 <div className="featured_text">
                   <h1>{this.state.product.title}</h1>
                   {/* <p className="sub">Office Chair</p> */}
-                  <br/>
+                  <br />
                   <p className="price">${this.state.product.price}</p>
                 </div>
                 <div className="image">
                   <img
                     src={`/file/${this.state.product.productImage}`}
-                    style={{height:'50%'}}
+                    style={{ height: "50%" }}
                     className="img-fluid"
                     alt=""
                   />
@@ -151,14 +183,13 @@ class SingleProduct extends Component {
               </div>
               <div className="half">
                 <div className="description">
-                  <p>
-                    {this.state.product.description}
-                  </p>
+                  <p>{this.state.product.description}</p>
                 </div>
                 <span className="stock">
                   <i className="fa fa-shopping-cart" /> In stock
                 </span>
-                <br></br><br></br>
+                <br></br>
+                <br></br>
                 <div className="reviews">
                   <i className="fa-solid fa-plane"></i>
                   {/* <ul className="stars">
@@ -169,8 +200,9 @@ class SingleProduct extends Component {
                 <li><i className="fa fa-star-o" /></li>
               </ul> */}
                   {/* <span>(64 reviews)</span> */}
-                <strong>Shipped from </strong><br></br>
-                {this.state.seller.address}
+                  <strong>Shipped from </strong>
+                  <br></br>
+                  {this.state.seller.address}
                 </div>
               </div>
             </div>
@@ -181,10 +213,10 @@ class SingleProduct extends Component {
                 <h3>+91-{this.state.seller.phone}</h3>
               </div>
               <div className="action mx-1">
-                <button type="button">Buy Now</button>
+                {button1()}
               </div>
               <div className="action mx-1">
-                <button type="button">Add to cart</button>
+              {button2()}
               </div>
             </div>
           </div>
@@ -217,4 +249,12 @@ class SingleProduct extends Component {
     );
   }
 }
-export default (props) => <SingleProduct {...props} params={useParams()} />;
+SingleProduct.propTypes = {
+  auth: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps)((props) => <SingleProduct {...props} params={useParams()} />);
