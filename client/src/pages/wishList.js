@@ -19,21 +19,22 @@ class WishList extends Component {
       phone: "",
       name: "",
       bio: "",
+      wishList : ""
     };
+
+    this.onclick = this.onclick.bind(this)
   }
-  componentDidMount() {
-    axios
+  async componentDidMount() {
+    await axios
       .get("/user/" + this.props.auth.user.id)
-      .then(async (response) => {
-        const wishList = response.data.wishList;
+      .then((response) => {
         // this.setState({ products: [] });
         // let allProducts;
-        await axios
-          .get("/products/allproducts")
-          .then((response) => this.setState({ products: response.data }));
-        this.state.products.filter((product) => wishList.includes(product._id));
-        //    allProducts.filter((product)=>wishList.includes(product.data));
-
+        // await axios
+        //   .get("/products/allproducts")
+        //   .then((res) => this.setState({ products: res.data }));
+        //   // this.state.products.filter((product)=>response.data.wishList.includes(product._id));
+        // console.log(this.state.products)
         // Promise.all(
         //   wishList.map(async (id) => {
         //     await axios.get("/products/" + id).then((product) =>
@@ -52,28 +53,40 @@ class WishList extends Component {
           name: response.data.name,
           address: response.data.address,
           bio: response.data.bio,
-          //   products:allProducts,
+          wishList : response.data.wishList
         });
       })
       .catch((error) => {
         console.log(error);
       });
+
+      await axios
+        .get("/products/allproducts")
+        .then((res) => this.setState({ 
+          products: res.data.filter((product)=>this.state.wishList.includes(product._id))
+        }));
   }
 
   onclick(id) {
     const product = {
       product_id: id,
     };
+
     axios
-      .post("/wishlist/" + this.props.auth.user.id, product)
+      .post("/wishlist/delete/" + this.props.auth.user.id, product)
       .then((res) => console.log(res));
+
+    this.setState({
+      products : this.state.products.filter(product => (product._id != id)),
+      wishList : this.state.wishList.filter(product_id => (product_id != id))
+    })
   }
 
   productList() {
     return this.state.products.map((currentProduct) => {
       return (
         <>
-          <CardComponent product={currentProduct} wishListEnable={true}/>
+          <CardComponent product={currentProduct} wishListEnable={true} onclick={() => this.onclick(currentProduct._id)}/>
           
         </>
       );

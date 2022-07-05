@@ -85,12 +85,18 @@ class Dashboard extends Component {
 
   myList(items,onSale) {
     return items.map((item) => {
-      return <Listers item={item} onclick={this.onDelete(item._id)} onSale={onSale}/>;
+      return <Listers item={item} onclick={() => this.onDelete(item._id)} onSale={onSale}/>;
     });
   }
 
   onDelete(id) {
-    console.log(id);
+
+    axios.delete('/products/delete/'+id)
+      .then(res => { console.log(res.data)});
+
+    this.setState({
+      toBeSold : this.state.toBeSold.filter(el => el._id !== id)
+    })
   }
 
   onLogoutClick = (e) => {

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-const CardComponent = ({ product ,wishListEnable}) => {
+const CardComponent = ({ product ,wishListEnable,onclick}) => {
   return (
     <div className="col">
       <div className="card h-100">
@@ -34,18 +34,14 @@ const CardComponent = ({ product ,wishListEnable}) => {
         </div>
         {wishListEnable ? (
           <div style={{ textAlign: "center" }}>
-            <Link
-              to={`/products/product/${product._id}`}
-              className="btn-flat waves-effect"
-            >
               <button
                 type="button"
                 className="btn btn-link btn-block"
                 style={{ padding: "15px", textAlign: "center",color:"red" }}
+                onClick={onclick}
               >
                 Remove from wishlist
               </button>
-            </Link>
           </div>
         ) : (
           ""

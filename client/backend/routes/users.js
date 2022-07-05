@@ -50,7 +50,7 @@ router.route("/wishlist/:id").post((req, res) => {
         user.wishList.push(req.body.product_id);
         user
           .save()
-          .then(() => res.json("User updated!"))
+          .then(() => res.json("Product added!"))
           .catch((err) => res.status(400).json("Error: " + err));
       }
       else{
@@ -59,6 +59,18 @@ router.route("/wishlist/:id").post((req, res) => {
     })
     .catch((err) => res.status(400).json("Error: " + err));
 });
+
+router.route("/wishlist/delete/:id").post((req,res) => {
+  id = req.params.id;
+  User.findById(id)
+  .then((user) => {
+    user.wishList.pull(req.body.product_id)
+    user
+    .save()
+    .then(() => res.json("Product removed from wishlist"))
+    .catch((err) => res.status(400).json("Error: " + err));
+  })
+})
 
 router.route("/login").post((req, res) => {
   // Form validation
