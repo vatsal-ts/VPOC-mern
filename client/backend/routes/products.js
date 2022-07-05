@@ -1,5 +1,6 @@
 const router = require("express").Router();
 let Product = require('../models/products.model');
+let User = require('../models/users.model');
 const upload = require("../middleware/upload");
 
 // const upload = multer({ dest: "public/files" });
@@ -74,13 +75,27 @@ router.route('/update/:id').post(upload.single("productImage"),(req, res) => {
 router.route('/:id').get((req, res) => { 
     id = req.params.id;
     Product.findById(id)
-        .then(product => res.json(product))
-        .catch(err => res.status(400).json('Error: ' + err));
+      .then(product => res.json(product))
+      .catch(err => res.status(400).json('Error: ' + err));
 });
 
-router.route('/:id').delete((req, res) => {
-    Product.findByIdAndDelete(req.params.id)
+router.route('/delete/:id').delete((req, res) => {
+    id = req.params.id
+    Product.findByIdAndDelete(id)
       .then(() => res.json('Product deleted.'))
+      .catch(err => res.status(400).json('Error: ' + err));
+
+    User.find({})
+      .then(users => {
+
+        users.map((user)=>{
+          if(user.wishList.includes(id)){
+            user.wishList.pull(id)
+
+            user.save()
+          }
+        })
+      })
       .catch(err => res.status(400).json('Error: ' + err));
 });
 
